@@ -8,7 +8,7 @@ The GBS Control Pro Video Converter is a versatile video signal conversion devic
 
 ## Links
 
- [Multi-language Manual](https://www.retroscaler.com/?page_id=480) | [FAQ](https://github.com/RetroScaler/gbsc-pro/blob/main/source/GBSC-pro%20Compatibility%20List%20%20Firmware%20Version%201.2.md) | [GitHub](https://github.com/RetroScaler/gbsc-pro) | [Discord](https://discord.com/invite/2MMWRkVRbk)
+ [Multi-language Manual](https://www.retroscaler.com/?page_id=480) | [FAQ](https://github.com/RetroScaler/gbsc-pro/blob/main/source/GBSC-pro%20Compatibility%20List%20%20Firmware%20Version%201.2.md) | [GitHub](https://github.com/RetroScaler/gbsc-pro) | [Discord](https://discord.com/invite/2MMWRkVRbk) | [Video Tutorial](https://www.youtube.com/playlist?list=PLQ6X-Dl0NtDnZm5v3n3IgvNOSrBsg7s7T)
 
 ## Support the Project  
 This project is open-source and free to use. If you'd like to support future development, **pre-assembled hardware kits** are available for purchase:  
