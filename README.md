@@ -4,7 +4,7 @@
 
 ---
 
-The GBS Control Pro Video Converter is a versatile video signal conversion device designed to seamlessly connect retro game consoles, DVD players, and other vintage equipment to modern HD displays. With support for up to 1080p HD output, it transforms your classic gaming experience.
+The GBS Control Pro Video Converter is a versatile video signal conversion device designed to seamlessly connect retro game consoles, DVD players, and other vintage equipment to modern HD displays. With support for up to 1080p HD output, it transforms your classic gaming experience. It is based on [gbs-control](https://github.com/ramapcsx2/gbs-control) by ramapcsx2
 
 ## Links
 
@@ -62,4 +62,6 @@ Utilizing advanced signal processing technology, this converter ensures low-late
 
 Crafted from high-quality materials, the GBS Control Pro is built for durability and stability.
 
+## Special Thanks to...
 
+- @ramapcsx2 ： for [gbs-control](https://github.com/ramapcsx2/gbs-control) ❤️
