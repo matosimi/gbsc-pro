@@ -18,7 +18,7 @@ Alternatively, you can [build it yourself](https://github.com/RetroScaler/gbsc-p
 
 ## Community Participation
 If you would like to discuss features, issues or anything else related to **gbsc pro** please [create an issue](https://github.com/RetroScaler/gbsc-pro/issues/new) or join the [OpenStick RetroScaler Discord](https://discord.com/invite/2MMWRkVRbk) support channel.
-![](source/4.jpg)
+![](source/product-01.jpg)
 
 ## **Features**:
 
