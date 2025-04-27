@@ -1,43 +1,28 @@
-.\output\debug\uart_dma.o: ..\source\uart_dma.c
-.\output\debug\uart_dma.o: ..\source\uart_dma.h
-.\output\debug\uart_dma.o: ..\source\main.h
-.\output\debug\uart_dma.o: ../../drivers/hc32_ll_driver/inc/hc32_ll.h
-.\output\debug\uart_dma.o: ../../drivers/hc32_ll_driver/inc/hc32_ll_def.h
-.\output\debug\uart_dma.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
-.\output\debug\uart_dma.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
-.\output\debug\uart_dma.o: ../../drivers/cmsis/Device/HDSC/hc32f4xx/Include/hc32f4xx.h
-.\output\debug\uart_dma.o: ../../drivers/cmsis/Device/HDSC/hc32f4xx/Include/hc32f460.h
-.\output\debug\uart_dma.o: ../../drivers/cmsis/Include/core_cm4.h
-.\output\debug\uart_dma.o: ../../drivers/cmsis/Include/cmsis_version.h
-.\output\debug\uart_dma.o: ../../drivers/cmsis/Include/cmsis_compiler.h
-.\output\debug\uart_dma.o: ../../drivers/cmsis/Include/cmsis_armcc.h
-.\output\debug\uart_dma.o: ../../drivers/cmsis/Include/mpu_armv7.h
-.\output\debug\uart_dma.o: ../../drivers/cmsis/Device/HDSC/hc32f4xx/Include/system_hc32f460.h
-.\output\debug\uart_dma.o: ../source/hc32f4xx_conf.h
-.\output\debug\uart_dma.o: ../../drivers/hc32_ll_driver/inc/hc32_ll_aos.h
-.\output\debug\uart_dma.o: ../../drivers/hc32_ll_driver/inc/hc32_ll_clk.h
-.\output\debug\uart_dma.o: ../../drivers/hc32_ll_driver/inc/hc32_ll_dma.h
-.\output\debug\uart_dma.o: ../../drivers/hc32_ll_driver/inc/hc32_ll_efm.h
-.\output\debug\uart_dma.o: ../../drivers/hc32_ll_driver/inc/hc32_ll_fcg.h
-.\output\debug\uart_dma.o: ../../drivers/hc32_ll_driver/inc/hc32_ll_fcm.h
-.\output\debug\uart_dma.o: ../../drivers/hc32_ll_driver/inc/hc32_ll_gpio.h
-.\output\debug\uart_dma.o: ../../drivers/hc32_ll_driver/inc/hc32_ll_i2c.h
-.\output\debug\uart_dma.o: ../../drivers/hc32_ll_driver/inc/hc32_ll_interrupts.h
-.\output\debug\uart_dma.o: ../../drivers/hc32_ll_driver/inc/hc32_ll_keyscan.h
-.\output\debug\uart_dma.o: ../../drivers/hc32_ll_driver/inc/hc32_ll_pwc.h
-.\output\debug\uart_dma.o: ../../drivers/hc32_ll_driver/inc/hc32_ll_sram.h
-.\output\debug\uart_dma.o: ../../drivers/hc32_ll_driver/inc/hc32_ll_tmr0.h
-.\output\debug\uart_dma.o: ../../drivers/hc32_ll_driver/inc/hc32_ll_usart.h
-.\output\debug\uart_dma.o: ../../drivers/hc32_ll_driver/inc/hc32_ll_utility.h
-.\output\debug\uart_dma.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
-.\output\debug\uart_dma.o: ../../drivers/bsp/ev_hc32f460_lqfp100_v2/ev_hc32f460_lqfp100_v2_bsp.h
-.\output\debug\uart_dma.o: ../../drivers/bsp/ev_hc32f460_lqfp100_v2/ev_hc32f460_lqfp100_v2.h
-.\output\debug\uart_dma.o: ../../drivers/hc32_ll_driver/inc/hc32_ll_i2s.h
-.\output\debug\uart_dma.o: ../../drivers/hc32_ll_driver/inc/hc32_ll_spi.h
-.\output\debug\uart_dma.o: ..\source\flash.h
-.\output\debug\uart_dma.o: ..\source\main.h
-.\output\debug\uart_dma.o: ..\source\uart_dma.h
-.\output\debug\uart_dma.o: ..\source\i2c.h
-.\output\debug\uart_dma.o: ..\source\videoprocess.h
-.\output\debug\uart_dma.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
-.\output\debug\uart_dma.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdbool.h
+./output/debug/uart_dma.o: ..\source\uart_dma.c ..\source\uart_dma.h \
+  ..\source\main.h ..\..\drivers\hc32_ll_driver\inc\hc32_ll.h \
+  ..\..\drivers\hc32_ll_driver\inc\hc32_ll_def.h \
+  ..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f4xx.h \
+  ..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f460.h \
+  ..\..\drivers\cmsis\Include\core_cm4.h \
+  ..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\system_hc32f460.h \
+  ..\source\hc32f4xx_conf.h \
+  ..\..\drivers\hc32_ll_driver\inc\hc32_ll_aos.h \
+  ..\..\drivers\hc32_ll_driver\inc\hc32_ll_clk.h \
+  ..\..\drivers\hc32_ll_driver\inc\hc32_ll_dma.h \
+  ..\..\drivers\hc32_ll_driver\inc\hc32_ll_efm.h \
+  ..\..\drivers\hc32_ll_driver\inc\hc32_ll_fcg.h \
+  ..\..\drivers\hc32_ll_driver\inc\hc32_ll_fcm.h \
+  ..\..\drivers\hc32_ll_driver\inc\hc32_ll_gpio.h \
+  ..\..\drivers\hc32_ll_driver\inc\hc32_ll_i2c.h \
+  ..\..\drivers\hc32_ll_driver\inc\hc32_ll_interrupts.h \
+  ..\..\drivers\hc32_ll_driver\inc\hc32_ll_keyscan.h \
+  ..\..\drivers\hc32_ll_driver\inc\hc32_ll_pwc.h \
+  ..\..\drivers\hc32_ll_driver\inc\hc32_ll_sram.h \
+  ..\..\drivers\hc32_ll_driver\inc\hc32_ll_tmr0.h \
+  ..\..\drivers\hc32_ll_driver\inc\hc32_ll_usart.h \
+  ..\..\drivers\hc32_ll_driver\inc\hc32_ll_utility.h \
+  ..\..\drivers\bsp\ev_hc32f460_lqfp100_v2\ev_hc32f460_lqfp100_v2_bsp.h \
+  ..\..\drivers\bsp\ev_hc32f460_lqfp100_v2\ev_hc32f460_lqfp100_v2.h \
+  ..\..\drivers\hc32_ll_driver\inc\hc32_ll_i2s.h \
+  ..\..\drivers\hc32_ll_driver\inc\hc32_ll_spi.h ..\source\flash.h \
+  ..\source\i2c.h ..\source\videoprocess.h

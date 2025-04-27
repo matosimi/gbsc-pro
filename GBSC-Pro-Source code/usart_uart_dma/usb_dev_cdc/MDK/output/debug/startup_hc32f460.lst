@@ -881,12 +881,11 @@ ARM Macro Assembler    Page 14
               40050800 
               00000000 
               00000000 
-Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
-erwork --depend=.\output\debug\startup_hc32f460.d -o.\output\debug\startup_hc32
-f460.o -I.\RTE\_Uart_Dma_Debug -IC:\Users\Admin\AppData\Local\Arm\Packs\HDSC\HC
-32F46x\1.0.2\Device\Include -IC:\Keil_v5\ARM\CMSIS\Include --predefine="__MICRO
-LIB SETA 1" --predefine="__UVISION_VERSION SETA 528" --list=.\output\debug\star
-tup_hc32f460.lst startup_hc32f460.s
+Command Line: --debug --xref --diag_suppress=9931,A1950W --cpu=Cortex-M4.fp.sp 
+--depend=.\output\debug\startup_hc32f460.d -o.\output\debug\startup_hc32f460.o 
+-IC:\Arm\Packs\HDSC\HC32F460\1.0.11\Device\Include --predefine="__EVAL SETA 1" 
+--predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 542" --list
+=.\output\debug\startup_hc32f460.lst startup_hc32f460.s
 
 
 
@@ -2600,4 +2599,4 @@ Symbol: __main
       At line 245 in file startup_hc32f460.s
 Comment: __main used once
 2 symbols
-507 symbols in table
+508 symbols in table

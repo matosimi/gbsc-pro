@@ -1,4 +1,4 @@
---cpu=Cortex-M4.fp
+--cpu=Cortex-M4.fp.sp
 ".\output\debug\hc32_ll.o"
 ".\output\debug\hc32_ll_clk.o"
 ".\output\debug\hc32_ll_efm.o"

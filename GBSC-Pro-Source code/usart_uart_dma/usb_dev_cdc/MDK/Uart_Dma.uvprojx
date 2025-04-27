@@ -10,13 +10,13 @@
       <TargetName>Uart_Dma_Debug</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060750::V5.06 update 6 (build 750)::ARMCC</pCCUsed>
-      <uAC6>0</uAC6>
+      <pCCUsed>6230000::V6.23::ARMCLANG</pCCUsed>
+      <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>HC32F460JETA</Device>
           <Vendor>HDSC</Vendor>
-          <PackID>HDSC.HC32F46x.1.0.2</PackID>
+          <PackID>HDSC.HC32F460.1.0.11</PackID>
           <PackURL>https://raw.githubusercontent.com/hdscmcu/pack/master/</PackURL>
           <Cpu>IRAM(0x1FFF8000,0x2F000) IRAM2(0x200F0000,0x1000) IROM(0x00000000,0x80000) IROM2(0x03000C00,0x003C0) CPUTYPE("Cortex-M4") FPU2 CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -185,6 +185,8 @@
             <uocXRam>0</uocXRam>
             <RvdsVP>2</RvdsVP>
             <RvdsMve>0</RvdsMve>
+            <RvdsCdeCp>0</RvdsCdeCp>
+            <nBranchProt>0</nBranchProt>
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>1</hadIROM2>
             <StupSel>8</StupSel>
@@ -312,7 +314,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>1</Optim>
+            <Optim>2</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -321,14 +323,14 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <uC99>1</uC99>
             <uGnu>0</uGnu>
             <useXO>0</useXO>
             <v6Lang>3</v6Lang>
-            <v6LangP>6</v6LangP>
+            <v6LangP>3</v6LangP>
             <vShortEn>1</vShortEn>
             <vShortWch>1</vShortWch>
             <v6Lto>0</v6Lto>
@@ -338,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>__DEBUG,HC32F460,USE_DDL_DRIVER,_PLATFORM_ARM_</Define>
               <Undefine></Undefine>
-              <IncludePath>../source;../../drivers/cmsis/Device/HDSC/hc32f4xx/Include;../../drivers/cmsis/Include;../../drivers/hc32_ll_driver/inc;../../drivers/bsp/ev_hc32f460_lqfp100_v2;../../midwares/hc32/usb;../../midwares/hc32/usb/usb_device_lib/device_core;../../midwares/hc32/usb/usb_device_lib/device_class/single_cdc;..\APP;..\cm_backtrace</IncludePath>
+              <IncludePath>..\source;..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include;..\..\drivers\cmsis\Include;..\..\drivers\hc32_ll_driver\inc;..\..\drivers\bsp\ev_hc32f460_lqfp100_v2;..\..\midwares\hc32\usb;..\..\midwares\hc32\usb\usb_device_lib\device_core;..\..\midwares\hc32\usb\usb_device_lib\device_class\single_cdc;..\APP;..\cm_backtrace</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -351,7 +353,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <ClangAsOpt>4</ClangAsOpt>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -385,47 +387,47 @@
             <File>
               <FileName>hc32_ll.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../drivers/hc32_ll_driver/src/hc32_ll.c</FilePath>
+              <FilePath>..\..\drivers\hc32_ll_driver\src\hc32_ll.c</FilePath>
             </File>
             <File>
               <FileName>hc32_ll_clk.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../drivers/hc32_ll_driver/src/hc32_ll_clk.c</FilePath>
+              <FilePath>..\..\drivers\hc32_ll_driver\src\hc32_ll_clk.c</FilePath>
             </File>
             <File>
               <FileName>hc32_ll_efm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../drivers/hc32_ll_driver/src/hc32_ll_efm.c</FilePath>
+              <FilePath>..\..\drivers\hc32_ll_driver\src\hc32_ll_efm.c</FilePath>
             </File>
             <File>
               <FileName>hc32_ll_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../drivers/hc32_ll_driver/src/hc32_ll_gpio.c</FilePath>
+              <FilePath>..\..\drivers\hc32_ll_driver\src\hc32_ll_gpio.c</FilePath>
             </File>
             <File>
               <FileName>hc32_ll_interrupts.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../drivers/hc32_ll_driver/src/hc32_ll_interrupts.c</FilePath>
+              <FilePath>..\..\drivers\hc32_ll_driver\src\hc32_ll_interrupts.c</FilePath>
             </File>
             <File>
               <FileName>hc32_ll_pwc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../drivers/hc32_ll_driver/src/hc32_ll_pwc.c</FilePath>
+              <FilePath>..\..\drivers\hc32_ll_driver\src\hc32_ll_pwc.c</FilePath>
             </File>
             <File>
               <FileName>hc32_ll_sram.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../drivers/hc32_ll_driver/src/hc32_ll_sram.c</FilePath>
+              <FilePath>..\..\drivers\hc32_ll_driver\src\hc32_ll_sram.c</FilePath>
             </File>
             <File>
               <FileName>hc32_ll_usart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../drivers/hc32_ll_driver/src/hc32_ll_usart.c</FilePath>
+              <FilePath>..\..\drivers\hc32_ll_driver\src\hc32_ll_usart.c</FilePath>
             </File>
             <File>
               <FileName>hc32_ll_utility.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../drivers/hc32_ll_driver/src/hc32_ll_utility.c</FilePath>
+              <FilePath>..\..\drivers\hc32_ll_driver\src\hc32_ll_utility.c</FilePath>
             </File>
             <File>
               <FileName>hc32_ll_crc.c</FileName>
@@ -475,7 +477,7 @@
             <File>
               <FileName>ev_hc32f460_lqfp100_v2.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../drivers/bsp/ev_hc32f460_lqfp100_v2/ev_hc32f460_lqfp100_v2.c</FilePath>
+              <FilePath>..\..\drivers\bsp\ev_hc32f460_lqfp100_v2\ev_hc32f460_lqfp100_v2.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -545,13 +547,13 @@
       <TargetName>Uart_Dma_Release</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060020::V5.06 (build 20)::ARMCC</pCCUsed>
-      <uAC6>0</uAC6>
+      <pCCUsed>6230000::V6.23::ARMCLANG</pCCUsed>
+      <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>HC32F460PETB</Device>
           <Vendor>HDSC</Vendor>
-          <PackID>HDSC.HC32F46x.1.0.2</PackID>
+          <PackID>HDSC.HC32F460.1.0.11</PackID>
           <PackURL>https://raw.githubusercontent.com/hdscmcu/pack/master/</PackURL>
           <Cpu>IROM1(0x00000000,0x80000) IROM2(0x03000C00,0x3FC) IRAM1(0x1FFF8000,0x2F000) IRAM2(0x200F0000,0x1000) CPUTYPE("Cortex-M4") FPU2 CLOCK(8000000) ESEL ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -568,7 +570,7 @@
           <SLE66CMisc></SLE66CMisc>
           <SLE66AMisc></SLE66AMisc>
           <SLE66LinkerMisc></SLE66LinkerMisc>
-          <SFDFile>../../../../../../drivers/cmsis/Device/HDSC/hc32f4xx/Source/ARM/sfr/HDSC_HC32F460.SFR</SFDFile>
+          <SFDFile>C:\_DEVEL\gbsc-pro\GBSC-Pro-Source code\usart_uart_dma\drivers\cmsis\Device\HDSC\hc32f4xx\Source\ARM\sfr\HDSC_HC32F460.SFR</SFDFile>
           <bCustSvd>1</bCustSvd>
           <UseEnv>0</UseEnv>
           <BinPath></BinPath>
@@ -615,9 +617,9 @@
             <nStopB2X>0</nStopB2X>
           </BeforeMake>
           <AfterMake>
-            <RunUserProg1>0</RunUserProg1>
+            <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name></UserProg1Name>
+            <UserProg1Name>fromelf --bin --output "$L@L.bin" "#L"</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -720,6 +722,8 @@
             <uocXRam>0</uocXRam>
             <RvdsVP>1</RvdsVP>
             <RvdsMve>0</RvdsMve>
+            <RvdsCdeCp>0</RvdsCdeCp>
+            <nBranchProt>0</nBranchProt>
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>1</hadIROM2>
             <StupSel>8</StupSel>
@@ -856,16 +860,16 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <uC99>1</uC99>
             <uGnu>0</uGnu>
             <useXO>0</useXO>
-            <v6Lang>0</v6Lang>
-            <v6LangP>0</v6LangP>
-            <vShortEn>0</vShortEn>
-            <vShortWch>0</vShortWch>
+            <v6Lang>3</v6Lang>
+            <v6LangP>3</v6LangP>
+            <vShortEn>1</vShortEn>
+            <vShortWch>1</vShortWch>
             <v6Lto>0</v6Lto>
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
@@ -873,7 +877,7 @@
               <MiscControls></MiscControls>
               <Define>HC32F460,USE_DDL_DRIVER,</Define>
               <Undefine></Undefine>
-              <IncludePath>..\source;../../../../../../drivers/cmsis/Device/HDSC/hc32f4xx/Include;../../../../../../drivers/cmsis/Include;../../../../../../drivers/hc32_ll_driver/inc;../../../../../../drivers/bsp/ev_hc32f460_lqfp100_v2;../../../../../../midwares/hc32/usb;../../../../../../midwares/hc32/usb/usb_device_lib/device_core;../../../../../../midwares/hc32/usb/usb_device_lib/device_class/single_cdc;</IncludePath>
+              <IncludePath>..\source;..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include;..\..\drivers\cmsis\Include;..\..\drivers\hc32_ll_driver\inc;..\..\drivers\bsp\ev_hc32f460_lqfp100_v2;..\..\midwares\hc32\usb;..\..\midwares\hc32\usb\usb_device_lib\device_core;..\..\midwares\hc32\usb\usb_device_lib\device_class\single_cdc;..\..\drivers\hc32_ll_driver\inc;..\cm_backtrace</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -886,7 +890,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <ClangAsOpt>4</ClangAsOpt>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -920,47 +924,47 @@
             <File>
               <FileName>hc32_ll.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../drivers/hc32_ll_driver/src/hc32_ll.c</FilePath>
+              <FilePath>..\..\drivers\hc32_ll_driver\src\hc32_ll.c</FilePath>
             </File>
             <File>
               <FileName>hc32_ll_clk.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../drivers/hc32_ll_driver/src/hc32_ll_clk.c</FilePath>
+              <FilePath>..\..\drivers\hc32_ll_driver\src\hc32_ll_clk.c</FilePath>
             </File>
             <File>
               <FileName>hc32_ll_efm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../drivers/hc32_ll_driver/src/hc32_ll_efm.c</FilePath>
+              <FilePath>..\..\drivers\hc32_ll_driver\src\hc32_ll_efm.c</FilePath>
             </File>
             <File>
               <FileName>hc32_ll_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../drivers/hc32_ll_driver/src/hc32_ll_gpio.c</FilePath>
+              <FilePath>..\..\drivers\hc32_ll_driver\src\hc32_ll_gpio.c</FilePath>
             </File>
             <File>
               <FileName>hc32_ll_interrupts.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../drivers/hc32_ll_driver/src/hc32_ll_interrupts.c</FilePath>
+              <FilePath>..\..\drivers\hc32_ll_driver\src\hc32_ll_interrupts.c</FilePath>
             </File>
             <File>
               <FileName>hc32_ll_pwc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../drivers/hc32_ll_driver/src/hc32_ll_pwc.c</FilePath>
+              <FilePath>..\..\drivers\hc32_ll_driver\src\hc32_ll_pwc.c</FilePath>
             </File>
             <File>
               <FileName>hc32_ll_sram.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../drivers/hc32_ll_driver/src/hc32_ll_sram.c</FilePath>
+              <FilePath>..\..\drivers\hc32_ll_driver\src\hc32_ll_sram.c</FilePath>
             </File>
             <File>
               <FileName>hc32_ll_usart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../drivers/hc32_ll_driver/src/hc32_ll_usart.c</FilePath>
+              <FilePath>..\..\drivers\hc32_ll_driver\src\hc32_ll_usart.c</FilePath>
             </File>
             <File>
               <FileName>hc32_ll_utility.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../drivers/hc32_ll_driver/src/hc32_ll_utility.c</FilePath>
+              <FilePath>..\..\drivers\hc32_ll_driver\src\hc32_ll_utility.c</FilePath>
             </File>
             <File>
               <FileName>hc32_ll_crc.c</FileName>
@@ -1010,7 +1014,7 @@
             <File>
               <FileName>ev_hc32f460_lqfp100_v2.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../drivers/bsp/ev_hc32f460_lqfp100_v2/ev_hc32f460_lqfp100_v2.c</FilePath>
+              <FilePath>..\..\drivers\bsp\ev_hc32f460_lqfp100_v2\ev_hc32f460_lqfp100_v2.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1083,5 +1087,14 @@
     <components/>
     <files/>
   </RTE>
+
+  <LayerInfo>
+    <Layers>
+      <Layer>
+        <LayName>Uart_Dma</LayName>
+        <LayPrjMark>1</LayPrjMark>
+      </Layer>
+    </Layers>
+  </LayerInfo>
 
 </Project>

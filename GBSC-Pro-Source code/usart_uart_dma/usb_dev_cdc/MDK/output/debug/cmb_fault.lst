@@ -76,12 +76,11 @@ ARM Macro Assembler    Page 2
    45 0000000C                 ENDP
    46 0000000C         
    47 0000000C                 END
-Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
-erwork --depend=.\output\debug\cmb_fault.d -o.\output\debug\cmb_fault.o -I.\RTE
-\_Uart_Dma_Debug -IC:\Users\Admin\AppData\Local\Arm\Packs\HDSC\HC32F46x\1.0.2\D
-evice\Include -IC:\Keil_v5\ARM\CMSIS\Include --predefine="__MICROLIB SETA 1" --
-predefine="__UVISION_VERSION SETA 528" --list=.\output\debug\cmb_fault.lst ..\c
-m_backtrace\fault_handler\keil\cmb_fault.S
+Command Line: --debug --xref --diag_suppress=9931,A1950W --cpu=Cortex-M4.fp.sp 
+--depend=.\output\debug\cmb_fault.d -o.\output\debug\cmb_fault.o -IC:\Arm\Packs
+\HDSC\HC32F460\1.0.11\Device\Include --predefine="__EVAL SETA 1" --predefine="_
+_MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 542" --list=.\output\debu
+g\cmb_fault.lst ..\cm_backtrace\fault_handler\keil\cmb_fault.S
 
 
 
@@ -128,4 +127,4 @@ Symbol: cm_backtrace_fault
       At line 41 in file ..\cm_backtrace\fault_handler\keil\cmb_fault.S
 Comment: cm_backtrace_fault used once
 1 symbol
-337 symbols in table
+338 symbols in table

@@ -237,7 +237,7 @@ void Video_ReadNot2(uint8_t state )
 //        else
 //            adv_double =    u8_buf[2];
         
-        adv_double = true;
+        adv_double = false; //changed by MatoSimi to force line1x!
         
         if(u8_buf[3] >= 2)
             adv_smooth = false;
