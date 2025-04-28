@@ -1,373 +1,0 @@
-Dependencies for Project 'Uart_Dma', Target 'Uart_Dma_Debug': (DO NOT MODIFY !)
-CompilerVersion: 6230000::V6.23::ARMCLANG
-F (..\..\drivers\hc32_ll_driver\src\hc32_ll.c)(0x680C0CE0)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -D__MICROLIB -gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../source -I ../../drivers/cmsis/Device/HDSC/hc32f4xx/Include -I ../../drivers/cmsis/Include -I ../../drivers/hc32_ll_driver/inc -I ../../drivers/bsp/ev_hc32f460_lqfp100_v2 -I ../../midwares/hc32/usb -I ../../midwares/hc32/usb/usb_device_lib/device_core -I ../../midwares/hc32/usb/usb_device_lib/device_class/single_cdc -I ../APP -I ../cm_backtrace-IC:/Arm/Packs/HDSC/HC32F460/1.0.11/Device/Include-D__UVISION_VERSION="542" -D__DEBUG -DHC32F460 -DUSE_DDL_DRIVER -D_PLATFORM_ARM_-o ./output/debug/hc32_ll.o -MMD)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_def.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f4xx.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f460.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Include\core_cm4.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\system_hc32f460.h)(0x680C0CE0)
-I (..\source\hc32f4xx_conf.h)(0x680C0CE1)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_aos.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_clk.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_dma.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_efm.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_fcg.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_fcm.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_gpio.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_i2c.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_interrupts.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_keyscan.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_pwc.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_sram.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_tmr0.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_usart.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_utility.h)(0x680C0CE0)
-F (..\..\drivers\hc32_ll_driver\src\hc32_ll_clk.c)(0x680C0CE0)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -D__MICROLIB -gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../source -I ../../drivers/cmsis/Device/HDSC/hc32f4xx/Include -I ../../drivers/cmsis/Include -I ../../drivers/hc32_ll_driver/inc -I ../../drivers/bsp/ev_hc32f460_lqfp100_v2 -I ../../midwares/hc32/usb -I ../../midwares/hc32/usb/usb_device_lib/device_core -I ../../midwares/hc32/usb/usb_device_lib/device_class/single_cdc -I ../APP -I ../cm_backtrace-IC:/Arm/Packs/HDSC/HC32F460/1.0.11/Device/Include-D__UVISION_VERSION="542" -D__DEBUG -DHC32F460 -DUSE_DDL_DRIVER -D_PLATFORM_ARM_-o ./output/debug/hc32_ll_clk.o -MMD)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_clk.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_def.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f4xx.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f460.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Include\core_cm4.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\system_hc32f460.h)(0x680C0CE0)
-I (..\source\hc32f4xx_conf.h)(0x680C0CE1)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_utility.h)(0x680C0CE0)
-F (..\..\drivers\hc32_ll_driver\src\hc32_ll_efm.c)(0x680C0CE0)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -D__MICROLIB -gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../source -I ../../drivers/cmsis/Device/HDSC/hc32f4xx/Include -I ../../drivers/cmsis/Include -I ../../drivers/hc32_ll_driver/inc -I ../../drivers/bsp/ev_hc32f460_lqfp100_v2 -I ../../midwares/hc32/usb -I ../../midwares/hc32/usb/usb_device_lib/device_core -I ../../midwares/hc32/usb/usb_device_lib/device_class/single_cdc -I ../APP -I ../cm_backtrace-IC:/Arm/Packs/HDSC/HC32F460/1.0.11/Device/Include-D__UVISION_VERSION="542" -D__DEBUG -DHC32F460 -DUSE_DDL_DRIVER -D_PLATFORM_ARM_-o ./output/debug/hc32_ll_efm.o -MMD)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_efm.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_def.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f4xx.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f460.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Include\core_cm4.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\system_hc32f460.h)(0x680C0CE0)
-I (..\source\hc32f4xx_conf.h)(0x680C0CE1)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_utility.h)(0x680C0CE0)
-F (..\..\drivers\hc32_ll_driver\src\hc32_ll_gpio.c)(0x680C0CE0)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -D__MICROLIB -gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../source -I ../../drivers/cmsis/Device/HDSC/hc32f4xx/Include -I ../../drivers/cmsis/Include -I ../../drivers/hc32_ll_driver/inc -I ../../drivers/bsp/ev_hc32f460_lqfp100_v2 -I ../../midwares/hc32/usb -I ../../midwares/hc32/usb/usb_device_lib/device_core -I ../../midwares/hc32/usb/usb_device_lib/device_class/single_cdc -I ../APP -I ../cm_backtrace-IC:/Arm/Packs/HDSC/HC32F460/1.0.11/Device/Include-D__UVISION_VERSION="542" -D__DEBUG -DHC32F460 -DUSE_DDL_DRIVER -D_PLATFORM_ARM_-o ./output/debug/hc32_ll_gpio.o -MMD)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_gpio.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_def.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f4xx.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f460.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Include\core_cm4.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\system_hc32f460.h)(0x680C0CE0)
-I (..\source\hc32f4xx_conf.h)(0x680C0CE1)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_utility.h)(0x680C0CE0)
-F (..\..\drivers\hc32_ll_driver\src\hc32_ll_interrupts.c)(0x680C0CE0)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -D__MICROLIB -gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../source -I ../../drivers/cmsis/Device/HDSC/hc32f4xx/Include -I ../../drivers/cmsis/Include -I ../../drivers/hc32_ll_driver/inc -I ../../drivers/bsp/ev_hc32f460_lqfp100_v2 -I ../../midwares/hc32/usb -I ../../midwares/hc32/usb/usb_device_lib/device_core -I ../../midwares/hc32/usb/usb_device_lib/device_class/single_cdc -I ../APP -I ../cm_backtrace-IC:/Arm/Packs/HDSC/HC32F460/1.0.11/Device/Include-D__UVISION_VERSION="542" -D__DEBUG -DHC32F460 -DUSE_DDL_DRIVER -D_PLATFORM_ARM_-o ./output/debug/hc32_ll_interrupts.o -MMD)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_interrupts.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_def.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f4xx.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f460.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Include\core_cm4.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\system_hc32f460.h)(0x680C0CE0)
-I (..\source\hc32f4xx_conf.h)(0x680C0CE1)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_utility.h)(0x680C0CE0)
-F (..\..\drivers\hc32_ll_driver\src\hc32_ll_pwc.c)(0x680C0CE0)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -D__MICROLIB -gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../source -I ../../drivers/cmsis/Device/HDSC/hc32f4xx/Include -I ../../drivers/cmsis/Include -I ../../drivers/hc32_ll_driver/inc -I ../../drivers/bsp/ev_hc32f460_lqfp100_v2 -I ../../midwares/hc32/usb -I ../../midwares/hc32/usb/usb_device_lib/device_core -I ../../midwares/hc32/usb/usb_device_lib/device_class/single_cdc -I ../APP -I ../cm_backtrace-IC:/Arm/Packs/HDSC/HC32F460/1.0.11/Device/Include-D__UVISION_VERSION="542" -D__DEBUG -DHC32F460 -DUSE_DDL_DRIVER -D_PLATFORM_ARM_-o ./output/debug/hc32_ll_pwc.o -MMD)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_pwc.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_def.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f4xx.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f460.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Include\core_cm4.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\system_hc32f460.h)(0x680C0CE0)
-I (..\source\hc32f4xx_conf.h)(0x680C0CE1)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_utility.h)(0x680C0CE0)
-F (..\..\drivers\hc32_ll_driver\src\hc32_ll_sram.c)(0x680C0CE0)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -D__MICROLIB -gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../source -I ../../drivers/cmsis/Device/HDSC/hc32f4xx/Include -I ../../drivers/cmsis/Include -I ../../drivers/hc32_ll_driver/inc -I ../../drivers/bsp/ev_hc32f460_lqfp100_v2 -I ../../midwares/hc32/usb -I ../../midwares/hc32/usb/usb_device_lib/device_core -I ../../midwares/hc32/usb/usb_device_lib/device_class/single_cdc -I ../APP -I ../cm_backtrace-IC:/Arm/Packs/HDSC/HC32F460/1.0.11/Device/Include-D__UVISION_VERSION="542" -D__DEBUG -DHC32F460 -DUSE_DDL_DRIVER -D_PLATFORM_ARM_-o ./output/debug/hc32_ll_sram.o -MMD)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_sram.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_def.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f4xx.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f460.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Include\core_cm4.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\system_hc32f460.h)(0x680C0CE0)
-I (..\source\hc32f4xx_conf.h)(0x680C0CE1)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_utility.h)(0x680C0CE0)
-F (..\..\drivers\hc32_ll_driver\src\hc32_ll_usart.c)(0x680C0CE0)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -D__MICROLIB -gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../source -I ../../drivers/cmsis/Device/HDSC/hc32f4xx/Include -I ../../drivers/cmsis/Include -I ../../drivers/hc32_ll_driver/inc -I ../../drivers/bsp/ev_hc32f460_lqfp100_v2 -I ../../midwares/hc32/usb -I ../../midwares/hc32/usb/usb_device_lib/device_core -I ../../midwares/hc32/usb/usb_device_lib/device_class/single_cdc -I ../APP -I ../cm_backtrace-IC:/Arm/Packs/HDSC/HC32F460/1.0.11/Device/Include-D__UVISION_VERSION="542" -D__DEBUG -DHC32F460 -DUSE_DDL_DRIVER -D_PLATFORM_ARM_-o ./output/debug/hc32_ll_usart.o -MMD)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_usart.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_def.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f4xx.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f460.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Include\core_cm4.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\system_hc32f460.h)(0x680C0CE0)
-I (..\source\hc32f4xx_conf.h)(0x680C0CE1)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_utility.h)(0x680C0CE0)
-F (..\..\drivers\hc32_ll_driver\src\hc32_ll_utility.c)(0x680C0CE0)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -D__MICROLIB -gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../source -I ../../drivers/cmsis/Device/HDSC/hc32f4xx/Include -I ../../drivers/cmsis/Include -I ../../drivers/hc32_ll_driver/inc -I ../../drivers/bsp/ev_hc32f460_lqfp100_v2 -I ../../midwares/hc32/usb -I ../../midwares/hc32/usb/usb_device_lib/device_core -I ../../midwares/hc32/usb/usb_device_lib/device_class/single_cdc -I ../APP -I ../cm_backtrace-IC:/Arm/Packs/HDSC/HC32F460/1.0.11/Device/Include-D__UVISION_VERSION="542" -D__DEBUG -DHC32F460 -DUSE_DDL_DRIVER -D_PLATFORM_ARM_-o ./output/debug/hc32_ll_utility.o -MMD)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_utility.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_def.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f4xx.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f460.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Include\core_cm4.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\system_hc32f460.h)(0x680C0CE0)
-I (..\source\hc32f4xx_conf.h)(0x680C0CE1)
-F (..\..\drivers\hc32_ll_driver\src\hc32_ll_crc.c)(0x680C0CE0)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -D__MICROLIB -gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../source -I ../../drivers/cmsis/Device/HDSC/hc32f4xx/Include -I ../../drivers/cmsis/Include -I ../../drivers/hc32_ll_driver/inc -I ../../drivers/bsp/ev_hc32f460_lqfp100_v2 -I ../../midwares/hc32/usb -I ../../midwares/hc32/usb/usb_device_lib/device_core -I ../../midwares/hc32/usb/usb_device_lib/device_class/single_cdc -I ../APP -I ../cm_backtrace-IC:/Arm/Packs/HDSC/HC32F460/1.0.11/Device/Include-D__UVISION_VERSION="542" -D__DEBUG -DHC32F460 -DUSE_DDL_DRIVER -D_PLATFORM_ARM_-o ./output/debug/hc32_ll_crc.o -MMD)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_crc.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_def.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f4xx.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f460.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Include\core_cm4.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\system_hc32f460.h)(0x680C0CE0)
-I (..\source\hc32f4xx_conf.h)(0x680C0CE1)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_utility.h)(0x680C0CE0)
-F (..\..\drivers\hc32_ll_driver\src\hc32_ll_fcg.c)(0x680C0CE0)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -D__MICROLIB -gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../source -I ../../drivers/cmsis/Device/HDSC/hc32f4xx/Include -I ../../drivers/cmsis/Include -I ../../drivers/hc32_ll_driver/inc -I ../../drivers/bsp/ev_hc32f460_lqfp100_v2 -I ../../midwares/hc32/usb -I ../../midwares/hc32/usb/usb_device_lib/device_core -I ../../midwares/hc32/usb/usb_device_lib/device_class/single_cdc -I ../APP -I ../cm_backtrace-IC:/Arm/Packs/HDSC/HC32F460/1.0.11/Device/Include-D__UVISION_VERSION="542" -D__DEBUG -DHC32F460 -DUSE_DDL_DRIVER -D_PLATFORM_ARM_-o ./output/debug/hc32_ll_fcg.o -MMD)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_fcg.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_def.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f4xx.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f460.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Include\core_cm4.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\system_hc32f460.h)(0x680C0CE0)
-I (..\source\hc32f4xx_conf.h)(0x680C0CE1)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_utility.h)(0x680C0CE0)
-F (..\..\drivers\hc32_ll_driver\src\hc32_ll_tmr0.c)(0x680C0CE0)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -D__MICROLIB -gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../source -I ../../drivers/cmsis/Device/HDSC/hc32f4xx/Include -I ../../drivers/cmsis/Include -I ../../drivers/hc32_ll_driver/inc -I ../../drivers/bsp/ev_hc32f460_lqfp100_v2 -I ../../midwares/hc32/usb -I ../../midwares/hc32/usb/usb_device_lib/device_core -I ../../midwares/hc32/usb/usb_device_lib/device_class/single_cdc -I ../APP -I ../cm_backtrace-IC:/Arm/Packs/HDSC/HC32F460/1.0.11/Device/Include-D__UVISION_VERSION="542" -D__DEBUG -DHC32F460 -DUSE_DDL_DRIVER -D_PLATFORM_ARM_-o ./output/debug/hc32_ll_tmr0.o -MMD)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_tmr0.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_def.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f4xx.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f460.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Include\core_cm4.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\system_hc32f460.h)(0x680C0CE0)
-I (..\source\hc32f4xx_conf.h)(0x680C0CE1)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_utility.h)(0x680C0CE0)
-F (..\..\drivers\hc32_ll_driver\src\hc32_ll_i2c.c)(0x680C0CE0)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -D__MICROLIB -gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../source -I ../../drivers/cmsis/Device/HDSC/hc32f4xx/Include -I ../../drivers/cmsis/Include -I ../../drivers/hc32_ll_driver/inc -I ../../drivers/bsp/ev_hc32f460_lqfp100_v2 -I ../../midwares/hc32/usb -I ../../midwares/hc32/usb/usb_device_lib/device_core -I ../../midwares/hc32/usb/usb_device_lib/device_class/single_cdc -I ../APP -I ../cm_backtrace-IC:/Arm/Packs/HDSC/HC32F460/1.0.11/Device/Include-D__UVISION_VERSION="542" -D__DEBUG -DHC32F460 -DUSE_DDL_DRIVER -D_PLATFORM_ARM_-o ./output/debug/hc32_ll_i2c.o -MMD)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_i2c.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_def.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f4xx.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f460.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Include\core_cm4.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\system_hc32f460.h)(0x680C0CE0)
-I (..\source\hc32f4xx_conf.h)(0x680C0CE1)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_utility.h)(0x680C0CE0)
-F (..\..\drivers\hc32_ll_driver\src\hc32_ll_fcm.c)(0x680C0CE0)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -D__MICROLIB -gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../source -I ../../drivers/cmsis/Device/HDSC/hc32f4xx/Include -I ../../drivers/cmsis/Include -I ../../drivers/hc32_ll_driver/inc -I ../../drivers/bsp/ev_hc32f460_lqfp100_v2 -I ../../midwares/hc32/usb -I ../../midwares/hc32/usb/usb_device_lib/device_core -I ../../midwares/hc32/usb/usb_device_lib/device_class/single_cdc -I ../APP -I ../cm_backtrace-IC:/Arm/Packs/HDSC/HC32F460/1.0.11/Device/Include-D__UVISION_VERSION="542" -D__DEBUG -DHC32F460 -DUSE_DDL_DRIVER -D_PLATFORM_ARM_-o ./output/debug/hc32_ll_fcm.o -MMD)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_fcm.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_def.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f4xx.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f460.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Include\core_cm4.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\system_hc32f460.h)(0x680C0CE0)
-I (..\source\hc32f4xx_conf.h)(0x680C0CE1)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_utility.h)(0x680C0CE0)
-F (..\..\drivers\hc32_ll_driver\src\hc32_ll_icg.c)(0x680C0CE0)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -D__MICROLIB -gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../source -I ../../drivers/cmsis/Device/HDSC/hc32f4xx/Include -I ../../drivers/cmsis/Include -I ../../drivers/hc32_ll_driver/inc -I ../../drivers/bsp/ev_hc32f460_lqfp100_v2 -I ../../midwares/hc32/usb -I ../../midwares/hc32/usb/usb_device_lib/device_core -I ../../midwares/hc32/usb/usb_device_lib/device_class/single_cdc -I ../APP -I ../cm_backtrace-IC:/Arm/Packs/HDSC/HC32F460/1.0.11/Device/Include-D__UVISION_VERSION="542" -D__DEBUG -DHC32F460 -DUSE_DDL_DRIVER -D_PLATFORM_ARM_-o ./output/debug/hc32_ll_icg.o -MMD)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_icg.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_def.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f4xx.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f460.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Include\core_cm4.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\system_hc32f460.h)(0x680C0CE0)
-I (..\source\hc32f4xx_conf.h)(0x680C0CE1)
-F (..\..\drivers\hc32_ll_driver\src\hc32_ll_aos.c)(0x680C0CE0)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -D__MICROLIB -gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../source -I ../../drivers/cmsis/Device/HDSC/hc32f4xx/Include -I ../../drivers/cmsis/Include -I ../../drivers/hc32_ll_driver/inc -I ../../drivers/bsp/ev_hc32f460_lqfp100_v2 -I ../../midwares/hc32/usb -I ../../midwares/hc32/usb/usb_device_lib/device_core -I ../../midwares/hc32/usb/usb_device_lib/device_class/single_cdc -I ../APP -I ../cm_backtrace-IC:/Arm/Packs/HDSC/HC32F460/1.0.11/Device/Include-D__UVISION_VERSION="542" -D__DEBUG -DHC32F460 -DUSE_DDL_DRIVER -D_PLATFORM_ARM_-o ./output/debug/hc32_ll_aos.o -MMD)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_aos.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_def.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f4xx.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f460.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Include\core_cm4.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\system_hc32f460.h)(0x680C0CE0)
-I (..\source\hc32f4xx_conf.h)(0x680C0CE1)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_utility.h)(0x680C0CE0)
-F (..\..\drivers\hc32_ll_driver\src\hc32_ll_dma.c)(0x680C0CE0)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -D__MICROLIB -gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../source -I ../../drivers/cmsis/Device/HDSC/hc32f4xx/Include -I ../../drivers/cmsis/Include -I ../../drivers/hc32_ll_driver/inc -I ../../drivers/bsp/ev_hc32f460_lqfp100_v2 -I ../../midwares/hc32/usb -I ../../midwares/hc32/usb/usb_device_lib/device_core -I ../../midwares/hc32/usb/usb_device_lib/device_class/single_cdc -I ../APP -I ../cm_backtrace-IC:/Arm/Packs/HDSC/HC32F460/1.0.11/Device/Include-D__UVISION_VERSION="542" -D__DEBUG -DHC32F460 -DUSE_DDL_DRIVER -D_PLATFORM_ARM_-o ./output/debug/hc32_ll_dma.o -MMD)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_dma.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_def.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f4xx.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f460.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Include\core_cm4.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\system_hc32f460.h)(0x680C0CE0)
-I (..\source\hc32f4xx_conf.h)(0x680C0CE1)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_utility.h)(0x680C0CE0)
-F (..\..\drivers\bsp\ev_hc32f460_lqfp100_v2\ev_hc32f460_lqfp100_v2.c)(0x680C0CE0)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -D__MICROLIB -gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../source -I ../../drivers/cmsis/Device/HDSC/hc32f4xx/Include -I ../../drivers/cmsis/Include -I ../../drivers/hc32_ll_driver/inc -I ../../drivers/bsp/ev_hc32f460_lqfp100_v2 -I ../../midwares/hc32/usb -I ../../midwares/hc32/usb/usb_device_lib/device_core -I ../../midwares/hc32/usb/usb_device_lib/device_class/single_cdc -I ../APP -I ../cm_backtrace-IC:/Arm/Packs/HDSC/HC32F460/1.0.11/Device/Include-D__UVISION_VERSION="542" -D__DEBUG -DHC32F460 -DUSE_DDL_DRIVER -D_PLATFORM_ARM_-o ./output/debug/ev_hc32f460_lqfp100_v2.o -MMD)
-I (..\..\drivers\bsp\ev_hc32f460_lqfp100_v2\ev_hc32f460_lqfp100_v2.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_aos.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_def.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f4xx.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f460.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Include\core_cm4.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\system_hc32f460.h)(0x680C0CE0)
-I (..\source\hc32f4xx_conf.h)(0x680C0CE1)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_clk.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_dma.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_efm.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_fcg.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_fcm.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_gpio.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_i2c.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_i2s.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_interrupts.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_keyscan.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_pwc.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_spi.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_sram.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_usart.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_utility.h)(0x680C0CE0)
-I (..\source\main.h)(0x680C0CE1)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_tmr0.h)(0x680C0CE0)
-I (..\..\drivers\bsp\ev_hc32f460_lqfp100_v2\ev_hc32f460_lqfp100_v2_bsp.h)(0x680C0CE0)
-I (..\source\flash.h)(0x680C0CE1)
-I (..\source\uart_dma.h)(0x680C0CE1)
-I (..\source\i2c.h)(0x680C0CE1)
-I (..\source\videoprocess.h)(0x680C0CE1)
-F (..\source\main.c)(0x680C0CE1)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -D__MICROLIB -gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../source -I ../../drivers/cmsis/Device/HDSC/hc32f4xx/Include -I ../../drivers/cmsis/Include -I ../../drivers/hc32_ll_driver/inc -I ../../drivers/bsp/ev_hc32f460_lqfp100_v2 -I ../../midwares/hc32/usb -I ../../midwares/hc32/usb/usb_device_lib/device_core -I ../../midwares/hc32/usb/usb_device_lib/device_class/single_cdc -I ../APP -I ../cm_backtrace-IC:/Arm/Packs/HDSC/HC32F460/1.0.11/Device/Include-D__UVISION_VERSION="542" -D__DEBUG -DHC32F460 -DUSE_DDL_DRIVER -D_PLATFORM_ARM_-o ./output/debug/main.o -MMD)
-I (..\source\main.h)(0x680C0CE1)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_def.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f4xx.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f460.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Include\core_cm4.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\system_hc32f460.h)(0x680C0CE0)
-I (..\source\hc32f4xx_conf.h)(0x680C0CE1)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_aos.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_clk.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_dma.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_efm.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_fcg.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_fcm.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_gpio.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_i2c.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_interrupts.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_keyscan.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_pwc.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_sram.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_tmr0.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_usart.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_utility.h)(0x680C0CE0)
-I (..\..\drivers\bsp\ev_hc32f460_lqfp100_v2\ev_hc32f460_lqfp100_v2_bsp.h)(0x680C0CE0)
-I (..\..\drivers\bsp\ev_hc32f460_lqfp100_v2\ev_hc32f460_lqfp100_v2.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_i2s.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_spi.h)(0x680C0CE0)
-I (..\source\flash.h)(0x680C0CE1)
-I (..\source\uart_dma.h)(0x680C0CE1)
-I (..\source\i2c.h)(0x680C0CE1)
-I (..\source\videoprocess.h)(0x680C0CE1)
-F (..\source\flash.c)(0x680E2874)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -D__MICROLIB -gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../source -I ../../drivers/cmsis/Device/HDSC/hc32f4xx/Include -I ../../drivers/cmsis/Include -I ../../drivers/hc32_ll_driver/inc -I ../../drivers/bsp/ev_hc32f460_lqfp100_v2 -I ../../midwares/hc32/usb -I ../../midwares/hc32/usb/usb_device_lib/device_core -I ../../midwares/hc32/usb/usb_device_lib/device_class/single_cdc -I ../APP -I ../cm_backtrace-IC:/Arm/Packs/HDSC/HC32F460/1.0.11/Device/Include-D__UVISION_VERSION="542" -D__DEBUG -DHC32F460 -DUSE_DDL_DRIVER -D_PLATFORM_ARM_-o ./output/debug/flash.o -MMD)
-I (..\source\flash.h)(0x680C0CE1)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_efm.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_def.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f4xx.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f460.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Include\core_cm4.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\system_hc32f460.h)(0x680C0CE0)
-I (..\source\hc32f4xx_conf.h)(0x680C0CE1)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_fcg.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_gpio.h)(0x680C0CE0)
-I (..\source\main.h)(0x680C0CE1)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_aos.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_clk.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_dma.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_fcm.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_i2c.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_interrupts.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_keyscan.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_pwc.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_sram.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_tmr0.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_usart.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_utility.h)(0x680C0CE0)
-I (..\..\drivers\bsp\ev_hc32f460_lqfp100_v2\ev_hc32f460_lqfp100_v2_bsp.h)(0x680C0CE0)
-I (..\..\drivers\bsp\ev_hc32f460_lqfp100_v2\ev_hc32f460_lqfp100_v2.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_i2s.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_spi.h)(0x680C0CE0)
-I (..\source\uart_dma.h)(0x680C0CE1)
-I (..\source\i2c.h)(0x680C0CE1)
-I (..\source\videoprocess.h)(0x680C0CE1)
-F (..\source\i2c.c)(0x680C0CE1)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -D__MICROLIB -gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../source -I ../../drivers/cmsis/Device/HDSC/hc32f4xx/Include -I ../../drivers/cmsis/Include -I ../../drivers/hc32_ll_driver/inc -I ../../drivers/bsp/ev_hc32f460_lqfp100_v2 -I ../../midwares/hc32/usb -I ../../midwares/hc32/usb/usb_device_lib/device_core -I ../../midwares/hc32/usb/usb_device_lib/device_class/single_cdc -I ../APP -I ../cm_backtrace-IC:/Arm/Packs/HDSC/HC32F460/1.0.11/Device/Include-D__UVISION_VERSION="542" -D__DEBUG -DHC32F460 -DUSE_DDL_DRIVER -D_PLATFORM_ARM_-o ./output/debug/i2c.o -MMD)
-I (..\source\main.h)(0x680C0CE1)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_def.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f4xx.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f460.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Include\core_cm4.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\system_hc32f460.h)(0x680C0CE0)
-I (..\source\hc32f4xx_conf.h)(0x680C0CE1)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_aos.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_clk.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_dma.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_efm.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_fcg.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_fcm.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_gpio.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_i2c.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_interrupts.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_keyscan.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_pwc.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_sram.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_tmr0.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_usart.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_utility.h)(0x680C0CE0)
-I (..\..\drivers\bsp\ev_hc32f460_lqfp100_v2\ev_hc32f460_lqfp100_v2_bsp.h)(0x680C0CE0)
-I (..\..\drivers\bsp\ev_hc32f460_lqfp100_v2\ev_hc32f460_lqfp100_v2.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_i2s.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_spi.h)(0x680C0CE0)
-I (..\source\flash.h)(0x680C0CE1)
-I (..\source\uart_dma.h)(0x680C0CE1)
-I (..\source\i2c.h)(0x680C0CE1)
-I (..\source\videoprocess.h)(0x680C0CE1)
-F (..\source\uart_dma.c)(0x680C0CE1)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -D__MICROLIB -gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../source -I ../../drivers/cmsis/Device/HDSC/hc32f4xx/Include -I ../../drivers/cmsis/Include -I ../../drivers/hc32_ll_driver/inc -I ../../drivers/bsp/ev_hc32f460_lqfp100_v2 -I ../../midwares/hc32/usb -I ../../midwares/hc32/usb/usb_device_lib/device_core -I ../../midwares/hc32/usb/usb_device_lib/device_class/single_cdc -I ../APP -I ../cm_backtrace-IC:/Arm/Packs/HDSC/HC32F460/1.0.11/Device/Include-D__UVISION_VERSION="542" -D__DEBUG -DHC32F460 -DUSE_DDL_DRIVER -D_PLATFORM_ARM_-o ./output/debug/uart_dma.o -MMD)
-I (..\source\uart_dma.h)(0x680C0CE1)
-I (..\source\main.h)(0x680C0CE1)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_def.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f4xx.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f460.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Include\core_cm4.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\system_hc32f460.h)(0x680C0CE0)
-I (..\source\hc32f4xx_conf.h)(0x680C0CE1)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_aos.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_clk.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_dma.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_efm.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_fcg.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_fcm.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_gpio.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_i2c.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_interrupts.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_keyscan.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_pwc.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_sram.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_tmr0.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_usart.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_utility.h)(0x680C0CE0)
-I (..\..\drivers\bsp\ev_hc32f460_lqfp100_v2\ev_hc32f460_lqfp100_v2_bsp.h)(0x680C0CE0)
-I (..\..\drivers\bsp\ev_hc32f460_lqfp100_v2\ev_hc32f460_lqfp100_v2.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_i2s.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_spi.h)(0x680C0CE0)
-I (..\source\flash.h)(0x680C0CE1)
-I (..\source\i2c.h)(0x680C0CE1)
-I (..\source\videoprocess.h)(0x680C0CE1)
-F (..\source\videoprocess.c)(0x680C0CE1)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -D__MICROLIB -gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../source -I ../../drivers/cmsis/Device/HDSC/hc32f4xx/Include -I ../../drivers/cmsis/Include -I ../../drivers/hc32_ll_driver/inc -I ../../drivers/bsp/ev_hc32f460_lqfp100_v2 -I ../../midwares/hc32/usb -I ../../midwares/hc32/usb/usb_device_lib/device_core -I ../../midwares/hc32/usb/usb_device_lib/device_class/single_cdc -I ../APP -I ../cm_backtrace-IC:/Arm/Packs/HDSC/HC32F460/1.0.11/Device/Include-D__UVISION_VERSION="542" -D__DEBUG -DHC32F460 -DUSE_DDL_DRIVER -D_PLATFORM_ARM_-o ./output/debug/videoprocess.o -MMD)
-I (..\source\videoprocess.h)(0x680C0CE1)
-I (..\source\i2c.h)(0x680C0CE1)
-I (..\source\main.h)(0x680C0CE1)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_def.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f4xx.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f460.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Include\core_cm4.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\system_hc32f460.h)(0x680C0CE0)
-I (..\source\hc32f4xx_conf.h)(0x680C0CE1)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_aos.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_clk.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_dma.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_efm.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_fcg.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_fcm.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_gpio.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_i2c.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_interrupts.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_keyscan.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_pwc.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_sram.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_tmr0.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_usart.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_utility.h)(0x680C0CE0)
-I (..\..\drivers\bsp\ev_hc32f460_lqfp100_v2\ev_hc32f460_lqfp100_v2_bsp.h)(0x680C0CE0)
-I (..\..\drivers\bsp\ev_hc32f460_lqfp100_v2\ev_hc32f460_lqfp100_v2.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_i2s.h)(0x680C0CE0)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_spi.h)(0x680C0CE0)
-I (..\source\flash.h)(0x680C0CE1)
-I (..\source\uart_dma.h)(0x680C0CE1)
-F (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Source\system_hc32f460.c)(0x680C0CE0)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -D__MICROLIB -gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../source -I ../../drivers/cmsis/Device/HDSC/hc32f4xx/Include -I ../../drivers/cmsis/Include -I ../../drivers/hc32_ll_driver/inc -I ../../drivers/bsp/ev_hc32f460_lqfp100_v2 -I ../../midwares/hc32/usb -I ../../midwares/hc32/usb/usb_device_lib/device_core -I ../../midwares/hc32/usb/usb_device_lib/device_class/single_cdc -I ../APP -I ../cm_backtrace-IC:/Arm/Packs/HDSC/HC32F460/1.0.11/Device/Include-D__UVISION_VERSION="542" -D__DEBUG -DHC32F460 -DUSE_DDL_DRIVER -D_PLATFORM_ARM_-o ./output/debug/system_hc32f460.o -MMD)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f4xx.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\hc32f460.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Include\core_cm4.h)(0x680C0CE0)
-I (..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include\system_hc32f460.h)(0x680C0CE0)
-I (..\source\hc32f4xx_conf.h)(0x680C0CE1)
-I (..\..\drivers\hc32_ll_driver\inc\hc32_ll_def.h)(0x680C0CE0)
-F (.\startup_hc32f460.s)(0x680C0CE1)(--cpu Cortex-M4.fp.sp --pd "__EVAL SETA 1" -g --pd "__MICROLIB SETA 1" --diag_suppress=A1950W-IC:\Arm\Packs\HDSC\HC32F460\1.0.11\Device\Include--pd "__UVISION_VERSION SETA 542"--list .\output\debug\startup_hc32f460.lst--xref -o .\output\debug\startup_hc32f460.o--depend .\output\debug\startup_hc32f460.d)
-F (..\cm_backtrace\cm_backtrace.c)(0x680C0CE1)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__EVAL -D__MICROLIB -gdwarf-4 -O1 -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -Wno-reserved-identifier -I ../source -I ../../drivers/cmsis/Device/HDSC/hc32f4xx/Include -I ../../drivers/cmsis/Include -I ../../drivers/hc32_ll_driver/inc -I ../../drivers/bsp/ev_hc32f460_lqfp100_v2 -I ../../midwares/hc32/usb -I ../../midwares/hc32/usb/usb_device_lib/device_core -I ../../midwares/hc32/usb/usb_device_lib/device_class/single_cdc -I ../APP -I ../cm_backtrace-IC:/Arm/Packs/HDSC/HC32F460/1.0.11/Device/Include-D__UVISION_VERSION="542" -D__DEBUG -DHC32F460 -DUSE_DDL_DRIVER -D_PLATFORM_ARM_-o ./output/debug/cm_backtrace.o -MMD)
-I (..\cm_backtrace\cm_backtrace.h)(0x680C0CE1)
-I (..\cm_backtrace\cmb_def.h)(0x680C0CE1)
-I (..\cm_backtrace\cmb_cfg.h)(0x680E26C0)
-I (..\cm_backtrace\Languages\zh-CN\cmb_zh_CN.h)(0x680C0CE1)
-F (..\cm_backtrace\fault_handler\keil\cmb_fault.S)(0x680C0CE1)(--cpu Cortex-M4.fp.sp --pd "__EVAL SETA 1" -g --pd "__MICROLIB SETA 1" --diag_suppress=A1950W-IC:\Arm\Packs\HDSC\HC32F460\1.0.11\Device\Include--pd "__UVISION_VERSION SETA 542"--list .\output\debug\cmb_fault.lst--xref -o .\output\debug\cmb_fault.o--depend .\output\debug\cmb_fault.d)

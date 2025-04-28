@@ -101,9 +101,15 @@ uint8_t I2C_COMMANDS_YC_INPUT[] =
         0x42, 0x39, 0x24, // [0x39] PAL处理:
                           // 相同位域配置兼容PAL
         // [滤波器控制（手册6.2.23节）]
-        0x42, 0x17, 0x49, // [0x17]
+        0x42, 0x17, 0x49 // [0x17]
                           // BIT6=1 启用SH1滤波器
                           // BIT[3:0]=1001: SVHS模式8（增强锐度）
+			//matosimi test:
+			//0x42, 0xF3, 0x03, // Narrow chroma filter
+			//0x42, 0x1D, 0x05, // New field sync mode
+			//0x42, 0x8F, 0x04, // Force EAV/SAV sync
+			//0x42, 0xFD, 0x84, // Select User Sub Map
+			//0x42, 0x58, 0x67 // Chroma phase offset
 };
 
 uint8_t I2C_COMMANDS_CVBS_INPUT[] =

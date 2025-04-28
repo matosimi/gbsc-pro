@@ -3,21 +3,21 @@
 
 uint8_t dma_au8RxBuf[APP_FRAME_LEN_MAX];
 
-/**        DMA ´«ÊäÍê³É IRQ »Øµ÷¹¦ÄÜ
+/**        DMA ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ IRQ ï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½
  * @brief  DMA transfer complete IRQ callback function.
  * @param  None
  * @retval None
  */
 static void RX_DMA_TC_IrqCallback(void)
 {
-    m_enRxFrameEnd = SET; // ½ÓÊÕÍê³É
+    m_enRxFrameEnd = SET; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     m_u16RxLen = APP_FRAME_LEN_MAX;
 
-    USART_FuncCmd(USART_UNIT, USART_RX_TIMEOUT, DISABLE); // ³¬Ê±¹¦ÄÜ
+    USART_FuncCmd(USART_UNIT, USART_RX_TIMEOUT, DISABLE); // ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½
 
     DMA_ClearTransCompleteStatus(RX_DMA_UNIT, RX_DMA_TC_FLAG);
 }
-/**        DMA ´«ÊäÍê³É IRQ »Øµ÷¹¦ÄÜ
+/**        DMA ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ IRQ ï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½
  * @brief  DMA transfer complete IRQ callback function.
  * @param  None
  * @retval None
@@ -172,7 +172,7 @@ void TMR0_Config(uint16_t u16TimeoutBits)
     TMR0_HWStartCondCmd(DMATMR0_UNIT, DMATMR0_CH, ENABLE);
     TMR0_HWClearCondCmd(DMATMR0_UNIT, DMATMR0_CH, ENABLE);
 }
-/**         ³¬Ê±»Øµ÷º¯Êý
+/**         ï¿½ï¿½Ê±ï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½
  * @brief  USART RX timeout IRQ callback.
  * @param  None
  * @retval None
