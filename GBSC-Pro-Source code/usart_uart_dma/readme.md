@@ -1,20 +1,27 @@
 # Preparation steps for the environment
 Download Keil uVision from the official web.
+
 I'm using MDK542a.exe evaluation version:
 https://armkeil.blob.core.windows.net/eval/MDK542a.exe
 
 Install the toolset, I set up directories following way:
+
 C:\Keil_v5
+
 C:\Arm\Packs
 
 # Open
 Clone this github repository on your local machine.
+
 Open Keil uVision5
+
 Go Project->Open Project...
+
 Browse for Uart_Dma.uvprojx inside the usb_dev_cdc\MDK directory of this repository.
+
 Be sure to select Target: Uart_Dma_Release
 
-# Options for target Uard_Dma_Release 
+# Options for target Uart_Dma_Release 
 * Device: HC32F460JEUA
 
 |default|off-chip|Start|Size|Startup/NoInit
@@ -25,10 +32,12 @@ Be sure to select Target: Uart_Dma_Release
 ||IRAM2:|0x200F0000|0x1000||
 
 # Build
-Run Project->Build Target (or F7) to build the project
+Run Project->Build Target (or F7) to build the project.
+
 It is currently showing ~67 warnings regarding the debug messages printed using cmb_println. This can be ignored for now.
 
 Build creates usb_dev_cdc.axf in **output\release** directory as well as usb_dev_cdc.hex file and in After Build the usb_dev_cdc.bin file.
+
 The **usb_dev_cdc.bin** is actually the firmware binary that can be flashed to the AV module of GBSC-pro using the GBSC_PRO_Programmer.exe utility which is distributed with the official firmware releases.
 
 # How to flash
