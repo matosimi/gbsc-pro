@@ -48,10 +48,10 @@ The **usb_dev_cdc.bin** is actually the firmware binary that can be flashed to t
  4. Press BOOT button on GBSC-Pro while connecting the USB-C connector to the USB-C socket of GBSC-Pro
  5. If done correctly, the GBSC-Pro logo of GBSC_PRO_Programmer.exe turns blue and GBSC-Pro device LEDs are slowly alternating between green and red color
  6. Browse for the firmware binary (usb_dev_cdc.bin) using the GBSC_PRO_Programmer.exe tool and click Send button
- 7. Flashing process takes roughly 6 seconds, GBSC-pro LED keeps red during the process
- 8. Once done, GBSC-Pro LED turn green
+ 7. Flashing process takes roughly 6 seconds, GBSC-pro LED stays red during the process
+ 8. Once done, GBSC-Pro LED turns green
  9. Disconnect the USB-C cable from the USB-C connector of GBSC-Pro
- 10.Plug in the DC and push the power switch to run the GBSC-Pro with the newly flashed firmware 
+ 10. Plug in the DC and push the power switch to run the GBSC-Pro with the newly flashed firmware 
 
 # Disclaimer
 MatoSimi is not responsible for any damage to GBSC-Pro device(s) caused by using firmware builds from this repository.
