@@ -68,15 +68,15 @@ static uint8_t ContrastCount = 0xb0;
 
 static void vd_Button_Init(void)
 {
-    /* configuration structure initialization */ // 输出控制端口
+    /* configuration structure initialization */ // Output control port
     stc_gpio_init_t stcGpioInit;
     (void)GPIO_StructInit(&stcGpioInit);
-    stcGpioInit.u16PullUp = PIN_PU_ON;         // 上拉
-    stcGpioInit.u16PinDir = PIN_DIR_OUT;       // 输出方向
-    stcGpioInit.u16PinAttr = PIN_ATTR_DIGITAL; // 数字
-    //    stcGpioInit.u16PinOutputType = PIN_OUT_TYPE_CMOS;   //coms强输出
-    //    stcGpioInit.u16ExtInt = PIN_EXTINT_OFF;   //不使用外部中断
-    //    stcGpioInit.u16PinDrv = PIN_HIGH_DRV;   //高速
+    stcGpioInit.u16PullUp = PIN_PU_ON;         // Pull-up
+    stcGpioInit.u16PinDir = PIN_DIR_OUT;       // Output direction
+    stcGpioInit.u16PinAttr = PIN_ATTR_DIGITAL; // Digital
+    //    stcGpioInit.u16PinOutputType = PIN_OUT_TYPE_CMOS;   //cmos strong output
+    //    stcGpioInit.u16ExtInt = PIN_EXTINT_OFF;   //Do not use external interrupts
+    //    stcGpioInit.u16PinDrv = PIN_HIGH_DRV;   //High 
 
     stcGpioInit.u16PinState = PIN_STAT_RST; // 拉低
 
@@ -86,19 +86,19 @@ static void vd_Button_Init(void)
 
     //////////////////Line
     (void)GPIO_StructInit(&stcGpioInit);
-    stcGpioInit.u16PullUp = PIN_PU_ON;         // 上拉
-    stcGpioInit.u16PinDir = PIN_DIR_IN;        // 输入方向
-    stcGpioInit.u16PinAttr = PIN_ATTR_DIGITAL; // 数字
-    stcGpioInit.u16PinState = PIN_STAT_SET;    // 拉低
+    stcGpioInit.u16PullUp = PIN_PU_ON;         // Pull-up
+    stcGpioInit.u16PinDir = PIN_DIR_IN;        // Input direction
+    stcGpioInit.u16PinAttr = PIN_ATTR_DIGITAL; // Digital
+    stcGpioInit.u16PinState = PIN_STAT_SET;    // Set
 
     (void)GPIO_Init(GPIO_PORT_B, GPIO_PIN_05, &stcGpioInit);
 
     ///////////////ASW/////////////////////
     (void)GPIO_StructInit(&stcGpioInit);
-    stcGpioInit.u16PullUp = PIN_PU_OFF;        // 上拉
-    stcGpioInit.u16PinDir = PIN_DIR_OUT;       // 输出方向
-    stcGpioInit.u16PinAttr = PIN_ATTR_DIGITAL; // 数字
-    stcGpioInit.u16PinState = PIN_STAT_RST;    // 拉低
+    stcGpioInit.u16PullUp = PIN_PU_OFF;        // Pull-up
+    stcGpioInit.u16PinDir = PIN_DIR_OUT;       // Output direction
+    stcGpioInit.u16PinAttr = PIN_ATTR_DIGITAL; // Digital
+    stcGpioInit.u16PinState = PIN_STAT_RST;    // Reset
     stcGpioInit.u16PinDrv = PIN_HIGH_DRV;
     stcGpioInit.u16PinOutputType = PIN_OUT_TYPE_CMOS;
 
@@ -110,11 +110,11 @@ static void vd_Button_Init(void)
     //    stcGpioInit.u16PullUp = PIN_PU_OFF;         // 上拉
     if (asw_02)
     {
-        stcGpioInit.u16PinState = PIN_STAT_SET; // 拉高
+        stcGpioInit.u16PinState = PIN_STAT_SET; 
     }
     else
     {
-        stcGpioInit.u16PinState = PIN_STAT_RST; // 拉低
+        stcGpioInit.u16PinState = PIN_STAT_RST; 
     }
     (void)GPIO_Init(GPIO_PORT_ASW, GPIO_PIN_ASW2, &stcGpioInit); // ASW02
 
@@ -123,14 +123,14 @@ static void vd_Button_Init(void)
     AVsw = Read_AVSW();
     if (AVsw)
     {
-        stcGpioInit.u16PullUp = PIN_PU_OFF;     // 不上拉
-        stcGpioInit.u16PinState = PIN_STAT_RST; // 拉低
+        stcGpioInit.u16PullUp = PIN_PU_OFF;     
+        stcGpioInit.u16PinState = PIN_STAT_RST; 
                                                 //        led_state = LED_ALL;
     }
     else
     {
-        stcGpioInit.u16PullUp = PIN_PU_ON;      // 上拉
-        stcGpioInit.u16PinState = PIN_STAT_SET; // 拉高
+        stcGpioInit.u16PullUp = PIN_PU_ON;      
+        stcGpioInit.u16PinState = PIN_STAT_SET; 
                                                 //        led_state = LED_RED;
     }
     (void)GPIO_Init(GPIO_PORT_A, GPIO_PIN_08, &stcGpioInit);
@@ -165,9 +165,9 @@ static void Read_Adv_7391Sw(void)
 
 static uint8_t Key_Read(uint8_t mode)
 {
-    static uint8_t key_up = 1; // 按键松开标志
+    static uint8_t key_up = 1; //Key release flag
     if (mode == 1)
-        key_up = 1; // 支持连按
+        key_up = 1; //Support continuous pressing
 
     if (key_up && (GPIO_ReadInputPins(GPIO_PORT_B, GPIO_PIN_06) == 0))
     {
@@ -178,51 +178,51 @@ static uint8_t Key_Read(uint8_t mode)
     }
     else if (GPIO_ReadInputPins(GPIO_PORT_B, GPIO_PIN_06) == 1)
         key_up = 1;
-    return 0; // 无按键按下
+    return 0; // No button pressed
 }
 
-// 启用自动检测某些制式
+// Enable automatic detection of certain formats
 void enable_auto_detection(uint8_t enable)
 {
     static uint8_t art[2];
     if (enable)
     {
-        // 启用PAL、NTSC和SECAM的自动检测
+        // Enable automatic detection of PAL, NTSC and SECAM
         art[0] = AUTO_DETECT_REG;
         art[1] = AD_PAL_EN | AD_NTSC_EN | AD_SECAM_EN | 0x80;
         (void)I2C_Master_Transmit(DEVICE_ADDR, art, 2, TIMEOUT);
     }
     else
     {
-        // 禁用自动检测
+        // Disable automatic detection
         art[0] = AUTO_DETECT_REG;
         art[1] = 0x00;
         (void)I2C_Master_Transmit(DEVICE_ADDR, art, 2, TIMEOUT);
     }
 }
 uint8_t adv7280_7391_240p_config[] = {
-    // **关闭 I2P（保持隔行输入）**
-    0x84, 0x55, 0x00, // 关闭 I2P
-    0x84, 0x5A, 0x02, // 确保 I2P 关闭
+    // **Turn off I2P (keep interlaced input)**
+    0x84, 0x55, 0x00, // Turn off I2P
+    0x84, 0x5A, 0x02, // Make sure I2P is off
 
-    // **ADV7391 240p 输出设置**
-    0x56, 0x30, 0x14, // 设定 ITU-R BT.601 240p 输出
-    0x56, 0x31, 0x01, // 使能像素数据输出
-    0x56, 0x80, 0x10, // Luma SSAF 1.3MHz 滤波
-    0x56, 0x82, 0xC9, // 标清主动视频边缘控制 & SD 像素数据有效
-    0x56, 0x87, 0x20, // 启用 SD 自动检测
-    0x56, 0x88, 0x00, // 8-bit YCbCr 输入
+    // **ADV7391 240p output settings**
+    0x56, 0x30, 0x14, // Set ITU-R BT.601 240p output
+    0x56, 0x31, 0x01, // Enable pixel data output
+    0x56, 0x80, 0x10, // Luma SSAF 1.3MHz filter
+    0x56, 0x82, 0xC9, // SD active video edge control & SD pixel data valid
+    0x56, 0x87, 0x20, // Enable SD auto-detection
+    0x56, 0x88, 0x00, // 8-bit YCbCr input
 };
 
 void printBinary(unsigned char num)
 {
-    // 假设我们要输出32位的二进制数
+    // Assume we want to output a 32-bit binary number
     for (int i = sizeof(num) * 8 - 1; i >= 0; i--)
     {
-        // 使用位运算检查每一位
+        // Use bitwise operations to check each bit
         putchar((num & (1U << i)) ? '1' : '0');
     }
-    putchar('\n'); // 输出换行符
+    putchar('\n'); // Output newline character
 }
 /**
  * @brief  Main function of UART DMA project
@@ -263,19 +263,19 @@ int32_t main(void)
             // static uint8_t count;
             // static uint8_t BUFF[] = {
             //     0x42, 0x0E, 0x00, // Re-enter map
-            //     0x42, 0x0a, 0xe0, // new 亮度   00(00)  7F(+30)  80(-30)    e0
-            //     0x42, 0x08, 0x58, // new 对比度 00(00)  80(01)   FF(02)     58
-            //     0x42, 0xe3, 0x60, // new 饱和度 00(00)  80(01)   FF(02)     80
-            //     0x42, 0x0B, 0x00, // new 色调   80(00)  00(-312) ff(+312)
+            //     0x42, 0x0a, 0xe0, // new brightness 00(00)  7F(+30)  80(-30)    e0
+            //     0x42, 0x08, 0x58, // new contrast   00(00)  80(01)   FF(02)     58
+            //     0x42, 0xe3, 0x60, // new saturation 00(00)  80(01)   FF(02)     80
+            //     0x42, 0x0B, 0x00, // new hue        80(00)  00(-312) ff(+312)
             // };
             // static uint8_t BUFF1[] = {
             //     0x42, 0x0E, 0x00, // Re-enter map
-            //     0x42, 0x0a, 0x00, // new 亮度   00(00)  7F(+30)  80(-30)    e0
-            //     0x42, 0x08, 0x80, // new 对比度 00(00)  80(01)   FF(02)     58
-            //     0x42, 0xe3, 0x80, // new 饱和度 00(00)  80(01)   FF(02)     80
-            //     0x42, 0x0B, 0x00, // new 色调   80(00)  00(-312) ff(+312)
+            //     0x42, 0x0a, 0x00, // new brightness 00(00)  7F(+30)  80(-30)    e0
+            //     0x42, 0x08, 0x80, // new contrast   00(00)  80(01)   FF(02)     58
+            //     0x42, 0xe3, 0x80, // new saturation 00(00)  80(01)   FF(02)     80
+            //     0x42, 0x0B, 0x00, // new hue        80(00)  00(-312) ff(+312)
             // };
-            // // new 亮度   00(00)  7F(+30)  80(-30)    e0
+            // // new brightness   00(00)  7F(+30)  80(-30)    e0
             // if (++count >= 2)
             // {
             //     count = 0;

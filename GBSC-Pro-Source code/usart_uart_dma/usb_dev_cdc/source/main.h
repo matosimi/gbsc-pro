@@ -59,20 +59,20 @@
 #define RES_CHANGED  true//true  false
 
 
-// 寄存器地址
-#define VID_SEL_REG  0x02  // 视频制式选择寄存器
-#define AUTO_DETECT_REG 0x07  // 自动检测控制寄存器
+// Register address
+#define VID_SEL_REG  0x02  // Video format selection register
+#define AUTO_DETECT_REG 0x07  // Auto detection control register
 
-// 设置视频制式的宏
-#define VID_SEL_PAL    0x80  // PAL 制式
-#define VID_SEL_NTSC   0x50  // NTSC M 制式
-#define VID_SEL_SECAM  0xE0  // SECAM 制式
-#define VID_SEL_AUTO   0x00  // 自动检测模式
+// Set video format macro
+#define VID_SEL_PAL    0x80  // PAL format
+#define VID_SEL_NTSC   0x50  // NTSC M format
+#define VID_SEL_SECAM  0xE0  // SECAM format
+#define VID_SEL_AUTO   0x00  // Auto detection mode
 
-// 设置自动检测制式的宏
-#define AD_PAL_EN      0x01  // 启用PAL检测
-#define AD_NTSC_EN     0x02  // 启用NTSC检测
-#define AD_SECAM_EN    0x04  // 启用SECAM检测
+// Set auto detection format macro
+#define AD_PAL_EN      0x01  // Enable PAL detection
+#define AD_NTSC_EN     0x02  // Enable NTSC detection
+#define AD_SECAM_EN    0x04  // Enable SECAM detection
 
 
 #define LED_ERR_RED     0x80
@@ -95,7 +95,7 @@
 #define AV_INPUT false
 #define SV_INPUT true
 
-//全局定义
+//global definition
 /*LED_state*/
 extern uint8_t led_state;
 extern uint8_t led_sw;
