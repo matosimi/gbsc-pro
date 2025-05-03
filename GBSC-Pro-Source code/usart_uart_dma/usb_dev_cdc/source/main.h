@@ -86,7 +86,7 @@
 #define LED_TIME 35
 
 #define Boundary 10
-
+#define MatoSimi_debug 0	// 0=no debug options
 //#define true       1
 //#define false      0
 

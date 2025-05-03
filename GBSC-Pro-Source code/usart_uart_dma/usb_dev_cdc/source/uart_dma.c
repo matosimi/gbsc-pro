@@ -440,7 +440,6 @@ static void get_mode(const uint8_t atr)
 void signal_turn(void)
 {
     uint8_t buff[2];
-
     if (SET == m_enRxFrameEnd)
     {
 
@@ -495,15 +494,27 @@ void signal_turn(void)
                     )) // BCSH
             {
 
+							//matosimi add {
+							if (MatoSimi_debug > 0) {
+								if(dma_au8RxBuf[3] == 0x0a)
+								{
+									dma_au8RxBuf[3] = 0x30;
+								}
+								else if(dma_au8RxBuf[3] == 0x08)
+									dma_au8RxBuf[3] = 0x6b;
+								else if(dma_au8RxBuf[3] == 0xe3)
+									dma_au8RxBuf[3] = 0x8f;
+							}
+						 
                 (void)I2C_Master_Transmit(DEVICE_ADDR, &dma_au8RxBuf[3], 2, TIMEOUT);
                 c_state = 1;
                 printf("bcsh: 0x%02x \n",dma_au8RxBuf[4]);
                 if(dma_au8RxBuf[3] == 0x0a)
-                    Bright = dma_au8RxBuf[4];
+									Bright = MatoSimi_debug > 0 ? 69:dma_au8RxBuf[4];  //matosimi constant
                 else if(dma_au8RxBuf[3] == 0x08)
-                    Contrast = dma_au8RxBuf[4];
+									Contrast = MatoSimi_debug > 0 ? 121:dma_au8RxBuf[4];	//matosimi constant
                 else if(dma_au8RxBuf[3] == 0xe3)
-                    Saturation = dma_au8RxBuf[4];
+									Saturation = MatoSimi_debug > 0 ? 114:dma_au8RxBuf[4];	//matosimi constant
                 mem_settings();
             }
             else if (dma_au8RxBuf[2] == 'S') // Sw

@@ -232,12 +232,13 @@ void Video_ReadNot2(uint8_t state )
         else
             adv_input  =    u8_buf[1];
         
-//        if(u8_buf[2] >= 2)
-//            adv_double = false;
-//        else
-//            adv_double =    u8_buf[2];
-        
-        adv_double = false; //changed by MatoSimi to force line1x!
+        if(u8_buf[2] >= 2)
+            adv_double = false;
+        else
+            adv_double =    u8_buf[2];
+
+        if (MatoSimi_debug > 0)
+					adv_double = false; //changed by MatoSimi to force line1x!
         
         if(u8_buf[3] >= 2)
             adv_smooth = false;
@@ -333,9 +334,9 @@ void mem_settings(void)
    u8_buf[9] =     asw_03     ;
    u8_buf[10] =    asw_04     ;
    u8_buf[11] =    AVsw       ;
-   u8_buf[12] =    Bright     ;
-   u8_buf[13] =    Contrast   ;
-   u8_buf[14] =    Saturation ;
+	u8_buf[12] =  MatoSimi_debug > 0 ? 69:Bright     ; //matosimi constant
+	u8_buf[13] =  MatoSimi_debug > 0 ? 121:Contrast   ;//matosimi constant
+	u8_buf[14] =  MatoSimi_debug > 0 ? 113:Saturation ;//matosimi constant
 
    u8_buf[48] =   Input_signal;
    FLASH_WriteData(EFM_BASE+FLASH_LEAF_ADDR(USER), (uint8_t *)u8_buf, 64);
