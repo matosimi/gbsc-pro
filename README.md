@@ -1,6 +1,10 @@
+# PAL Atari 800 XL S-video output through GBSC-Pro
+[![Video Title](https://img.youtube.com/vi/Lblns1WzhkY/0.jpg)](https://www.youtube.com/watch?v=Lblns1WzhkY)
+
 # Source code of AV module:
 https://github.com/matosimi/gbsc-pro/tree/main/GBSC-Pro-Source%20code/usart_uart_dma
 
+# Original README:
 <p align="center">
     <img alt="gbsc-pro" src="https://github.com/RetroScaler/gbsc-pro/blob/c3da796360191a26cdcb62a284621f66431251a0/source/gbsc-pro%20logo.png" />
 </p>
