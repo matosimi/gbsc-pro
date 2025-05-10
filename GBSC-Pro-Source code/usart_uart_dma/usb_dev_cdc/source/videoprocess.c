@@ -121,7 +121,7 @@ uint8_t I2C_COMMANDS_CVBS_INPUT[] =
         // [Register page control (manual section 6.2.15)]
         0x42, 0x0E, 0x00, // [0x0E] Select the main register page
         // [Video input selection (manual table 15)]
-        0x42, 0x00, 0x09, //00// [0x00] CVBS input mode:
+        0x42, 0x00, 0x00, // [0x00] CVBS input mode:
                           // AIN1 input composite video signal
         // [Video processing control (manual section 6.2.56-57)]
         0x42, 0x38, 0x80, //24 // [0x38] NTSC processing:
@@ -130,7 +130,7 @@ uint8_t I2C_COMMANDS_CVBS_INPUT[] =
         0x42, 0x39, 0xc0, //24// [0x39] PAL processing:
                           // Same bit configuration for PAL compatibility
 				// [Filter control (Section 6.2.23 of the manual)]
-        0x42, 0x17, 0x2f, // [0x17]
+        0x42, 0x17, 0x49, // [0x17]
                           // BIT6=1 Enable SH1 filter
                           // BIT[3:0]=0111: Standard CVBS mode 7
 			
