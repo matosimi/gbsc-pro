@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>__DEBUG,HC32F460,USE_DDL_DRIVER,_PLATFORM_ARM_</Define>
               <Undefine></Undefine>
-              <IncludePath>..\source;..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include;..\..\drivers\cmsis\Include;..\..\drivers\hc32_ll_driver\inc;..\..\drivers\bsp\ev_hc32f460_lqfp100_v2;..\..\midwares\hc32\usb;..\..\midwares\hc32\usb\usb_device_lib\device_core;..\..\midwares\hc32\usb\usb_device_lib\device_class\single_cdc;..\APP;..\cm_backtrace</IncludePath>
+              <IncludePath>../source;../../drivers/cmsis/Device/HDSC/hc32f4xx/Include;../../drivers/cmsis/Include;../../drivers/hc32_ll_driver/inc;../../drivers/bsp/ev_hc32f460_lqfp100_v2;../../midwares/hc32/usb;../../midwares/hc32/usb/usb_device_lib/device_core;../../midwares/hc32/usb/usb_device_lib/device_class/single_cdc;..\APP;..\cm_backtrace</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -387,47 +387,47 @@
             <File>
               <FileName>hc32_ll.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\drivers\hc32_ll_driver\src\hc32_ll.c</FilePath>
+              <FilePath>../../drivers/hc32_ll_driver/src/hc32_ll.c</FilePath>
             </File>
             <File>
               <FileName>hc32_ll_clk.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\drivers\hc32_ll_driver\src\hc32_ll_clk.c</FilePath>
+              <FilePath>../../drivers/hc32_ll_driver/src/hc32_ll_clk.c</FilePath>
             </File>
             <File>
               <FileName>hc32_ll_efm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\drivers\hc32_ll_driver\src\hc32_ll_efm.c</FilePath>
+              <FilePath>../../drivers/hc32_ll_driver/src/hc32_ll_efm.c</FilePath>
             </File>
             <File>
               <FileName>hc32_ll_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\drivers\hc32_ll_driver\src\hc32_ll_gpio.c</FilePath>
+              <FilePath>../../drivers/hc32_ll_driver/src/hc32_ll_gpio.c</FilePath>
             </File>
             <File>
               <FileName>hc32_ll_interrupts.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\drivers\hc32_ll_driver\src\hc32_ll_interrupts.c</FilePath>
+              <FilePath>../../drivers/hc32_ll_driver/src/hc32_ll_interrupts.c</FilePath>
             </File>
             <File>
               <FileName>hc32_ll_pwc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\drivers\hc32_ll_driver\src\hc32_ll_pwc.c</FilePath>
+              <FilePath>../../drivers/hc32_ll_driver/src/hc32_ll_pwc.c</FilePath>
             </File>
             <File>
               <FileName>hc32_ll_sram.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\drivers\hc32_ll_driver\src\hc32_ll_sram.c</FilePath>
+              <FilePath>../../drivers/hc32_ll_driver/src/hc32_ll_sram.c</FilePath>
             </File>
             <File>
               <FileName>hc32_ll_usart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\drivers\hc32_ll_driver\src\hc32_ll_usart.c</FilePath>
+              <FilePath>../../drivers/hc32_ll_driver/src/hc32_ll_usart.c</FilePath>
             </File>
             <File>
               <FileName>hc32_ll_utility.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\drivers\hc32_ll_driver\src\hc32_ll_utility.c</FilePath>
+              <FilePath>../../drivers/hc32_ll_driver/src/hc32_ll_utility.c</FilePath>
             </File>
             <File>
               <FileName>hc32_ll_crc.c</FileName>
@@ -477,7 +477,7 @@
             <File>
               <FileName>ev_hc32f460_lqfp100_v2.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\drivers\bsp\ev_hc32f460_lqfp100_v2\ev_hc32f460_lqfp100_v2.c</FilePath>
+              <FilePath>../../drivers/bsp/ev_hc32f460_lqfp100_v2/ev_hc32f460_lqfp100_v2.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -875,9 +875,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>HC32F460,USE_DDL_DRIVER,_PLATFORM_ARM_</Define>
+              <Define>HC32F460,USE_DDL_DRIVER,</Define>
               <Undefine></Undefine>
-              <IncludePath>..\source;..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include;..\..\drivers\cmsis\Include;..\..\drivers\hc32_ll_driver\inc;..\..\drivers\bsp\ev_hc32f460_lqfp100_v2;..\..\midwares\hc32\usb;..\..\midwares\hc32\usb\usb_device_lib\device_core;..\..\midwares\hc32\usb\usb_device_lib\device_class\single_cdc;..\..\drivers\hc32_ll_driver\inc;..\cm_backtrace</IncludePath>
+              <IncludePath>..\source;..\..\drivers\cmsis\Device\HDSC\hc32f4xx\Include;..\..\drivers\cmsis\Include;..\..\drivers\hc32_ll_driver\inc;..\..\drivers\bsp\ev_hc32f460_lqfp100_v2;..\..\midwares\hc32\usb;..\..\midwares\hc32\usb\usb_device_lib\device_core;..\..\midwares\hc32\usb\usb_device_lib\device_class\single_cdc;..\cm_backtrace</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -924,47 +924,47 @@
             <File>
               <FileName>hc32_ll.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\drivers\hc32_ll_driver\src\hc32_ll.c</FilePath>
+              <FilePath>../../drivers/hc32_ll_driver/src/hc32_ll.c</FilePath>
             </File>
             <File>
               <FileName>hc32_ll_clk.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\drivers\hc32_ll_driver\src\hc32_ll_clk.c</FilePath>
+              <FilePath>../../drivers/hc32_ll_driver/src/hc32_ll_clk.c</FilePath>
             </File>
             <File>
               <FileName>hc32_ll_efm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\drivers\hc32_ll_driver\src\hc32_ll_efm.c</FilePath>
+              <FilePath>../../drivers/hc32_ll_driver/src/hc32_ll_efm.c</FilePath>
             </File>
             <File>
               <FileName>hc32_ll_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\drivers\hc32_ll_driver\src\hc32_ll_gpio.c</FilePath>
+              <FilePath>../../drivers/hc32_ll_driver/src/hc32_ll_gpio.c</FilePath>
             </File>
             <File>
               <FileName>hc32_ll_interrupts.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\drivers\hc32_ll_driver\src\hc32_ll_interrupts.c</FilePath>
+              <FilePath>../../drivers/hc32_ll_driver/src/hc32_ll_interrupts.c</FilePath>
             </File>
             <File>
               <FileName>hc32_ll_pwc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\drivers\hc32_ll_driver\src\hc32_ll_pwc.c</FilePath>
+              <FilePath>../../drivers/hc32_ll_driver/src/hc32_ll_pwc.c</FilePath>
             </File>
             <File>
               <FileName>hc32_ll_sram.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\drivers\hc32_ll_driver\src\hc32_ll_sram.c</FilePath>
+              <FilePath>../../drivers/hc32_ll_driver/src/hc32_ll_sram.c</FilePath>
             </File>
             <File>
               <FileName>hc32_ll_usart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\drivers\hc32_ll_driver\src\hc32_ll_usart.c</FilePath>
+              <FilePath>../../drivers/hc32_ll_driver/src/hc32_ll_usart.c</FilePath>
             </File>
             <File>
               <FileName>hc32_ll_utility.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\drivers\hc32_ll_driver\src\hc32_ll_utility.c</FilePath>
+              <FilePath>../../drivers/hc32_ll_driver/src/hc32_ll_utility.c</FilePath>
             </File>
             <File>
               <FileName>hc32_ll_crc.c</FileName>
@@ -1014,7 +1014,7 @@
             <File>
               <FileName>ev_hc32f460_lqfp100_v2.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\drivers\bsp\ev_hc32f460_lqfp100_v2\ev_hc32f460_lqfp100_v2.c</FilePath>
+              <FilePath>../../drivers/bsp/ev_hc32f460_lqfp100_v2/ev_hc32f460_lqfp100_v2.c</FilePath>
             </File>
           </Files>
         </Group>

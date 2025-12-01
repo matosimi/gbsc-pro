@@ -101,7 +101,7 @@ extern uint8_t led_state;
 extern uint8_t led_sw;
 
 
-//extern uint8_t Adv_7391_sw;
+//extern uint8_t Adv_7391_sw; 
 extern uint8_t adv_input ;
 extern uint8_t adv_double ;
 extern uint8_t adv_smooth ;
@@ -117,6 +117,11 @@ extern uint8_t Input_signal;
 extern uint8_t Bright     ;
 extern uint8_t Contrast   ;
 extern uint8_t Saturation ;
+
+
+extern uint8_t btn_flag;
+
+
 
 
 extern uint8_t dma_au8RxBuf[APP_FRAME_LEN_MAX];

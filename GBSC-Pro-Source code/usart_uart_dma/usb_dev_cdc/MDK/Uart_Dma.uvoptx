@@ -275,7 +275,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>UL2CM3</Key>
-          <Name>UL2CM3(-S0 -C0 -P0 )  -FN2 -FC1000 -FD1FFF8000 -FF0HC32F460_512K -FF1HC32F460_otp -FL080000 -FL13FC -FS00 -FS13000C00 -FP0($$Device:HC32F460JEUA$FlashARM\HC32F460_512K.FLM) -FP1($$Device:HC32F460JEUA$FlashARM\HC32F460_otp.FLM)</Name>
+          <Name>UL2CM3(-S0 -C0 -P0 ) -FN2 -FC1000 -FD1FFF8000 -FF0HC32F460_512K -FF1HC32F460_otp -FL080000 -FL13FC -FS00 -FS13000C00 -FP0($$Device:HC32F460JEUA$FlashARM\HC32F460_512K.FLM) -FP1($$Device:HC32F460JEUA$FlashARM\HC32F460_otp.FLM)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
       <Breakpoint/>
@@ -344,7 +344,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\drivers\hc32_ll_driver\src\hc32_ll.c</PathWithFileName>
+      <PathWithFileName>../../drivers/hc32_ll_driver/src/hc32_ll.c</PathWithFileName>
       <FilenameWithoutPath>hc32_ll.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -356,7 +356,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\drivers\hc32_ll_driver\src\hc32_ll_clk.c</PathWithFileName>
+      <PathWithFileName>../../drivers/hc32_ll_driver/src/hc32_ll_clk.c</PathWithFileName>
       <FilenameWithoutPath>hc32_ll_clk.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -368,7 +368,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\drivers\hc32_ll_driver\src\hc32_ll_efm.c</PathWithFileName>
+      <PathWithFileName>../../drivers/hc32_ll_driver/src/hc32_ll_efm.c</PathWithFileName>
       <FilenameWithoutPath>hc32_ll_efm.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -380,7 +380,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\drivers\hc32_ll_driver\src\hc32_ll_gpio.c</PathWithFileName>
+      <PathWithFileName>../../drivers/hc32_ll_driver/src/hc32_ll_gpio.c</PathWithFileName>
       <FilenameWithoutPath>hc32_ll_gpio.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -392,7 +392,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\drivers\hc32_ll_driver\src\hc32_ll_interrupts.c</PathWithFileName>
+      <PathWithFileName>../../drivers/hc32_ll_driver/src/hc32_ll_interrupts.c</PathWithFileName>
       <FilenameWithoutPath>hc32_ll_interrupts.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -404,7 +404,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\drivers\hc32_ll_driver\src\hc32_ll_pwc.c</PathWithFileName>
+      <PathWithFileName>../../drivers/hc32_ll_driver/src/hc32_ll_pwc.c</PathWithFileName>
       <FilenameWithoutPath>hc32_ll_pwc.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -416,7 +416,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\drivers\hc32_ll_driver\src\hc32_ll_sram.c</PathWithFileName>
+      <PathWithFileName>../../drivers/hc32_ll_driver/src/hc32_ll_sram.c</PathWithFileName>
       <FilenameWithoutPath>hc32_ll_sram.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -428,7 +428,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\drivers\hc32_ll_driver\src\hc32_ll_usart.c</PathWithFileName>
+      <PathWithFileName>../../drivers/hc32_ll_driver/src/hc32_ll_usart.c</PathWithFileName>
       <FilenameWithoutPath>hc32_ll_usart.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -440,7 +440,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\drivers\hc32_ll_driver\src\hc32_ll_utility.c</PathWithFileName>
+      <PathWithFileName>../../drivers/hc32_ll_driver/src/hc32_ll_utility.c</PathWithFileName>
       <FilenameWithoutPath>hc32_ll_utility.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -545,7 +545,7 @@
 
   <Group>
     <GroupName>ev_hc32f460_lqfp100_v2</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -556,7 +556,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\drivers\bsp\ev_hc32f460_lqfp100_v2\ev_hc32f460_lqfp100_v2.c</PathWithFileName>
+      <PathWithFileName>../../drivers/bsp/ev_hc32f460_lqfp100_v2/ev_hc32f460_lqfp100_v2.c</PathWithFileName>
       <FilenameWithoutPath>ev_hc32f460_lqfp100_v2.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>

@@ -4,6 +4,10 @@
 # Source code of AV module:
 https://github.com/matosimi/gbsc-pro/tree/main/GBSC-Pro-Source%20code/usart_uart_dma
 
+# 01.12.2025: Now updated to match v1.3 original RetroScaler release
+Fixes for PAL Atari 800XL applied to the latest v1.3 Release
+(Only AV module firmware has been updated, use main firmware from the original release)
+
 # Original README:
 <p align="center">
     <img alt="gbsc-pro" src="https://github.com/RetroScaler/gbsc-pro/blob/c3da796360191a26cdcb62a284621f66431251a0/source/gbsc-pro%20logo.png" />

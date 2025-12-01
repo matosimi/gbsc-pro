@@ -22,7 +22,6 @@ TIM
 #include <PolledTimeout.h>
 esp8266::polledTimeout::periodicFastUs halfPeriod(1000);
 
-
 static unsigned long Tim_signal = 0;
 static unsigned long Tim_sys = 0;
 static unsigned long Tim_web = 0;
@@ -108,11 +107,22 @@ void PR_rgb(void)
   printf("VAL:R %d G %d B %d \n", R_VAL, G_VAL, B_VAL);
 #endif
 }
+int round_up_if_above(double value) {
+    int integer_part = (int)value;
+    double decimal_part = value - integer_part;
+
+    if (decimal_part > 0.5) {
+        return integer_part + 1;
+    } else {
+        return integer_part;
+    }
+}
 void Color_Conversion(void)
 {
-    GBS::VDS_Y_OFST::write((signed char)((float)(0.299 * (signed char)(R_VAL - 128)) + (float)(0.587 * (signed char)(G_VAL - 128)) + (float)(0.114 * (signed char)(B_VAL - 128))));
-    GBS::VDS_U_OFST::write((signed char)((float)(-0.169 * (signed char)(R_VAL - 128)) - (float)(0.331 * (signed char)(G_VAL - 128)) + (float)(0.500 * (signed char)(B_VAL - 128)))); //
-    GBS::VDS_V_OFST::write((signed char)((float)(0.500 * (signed char)(R_VAL - 128)) - (float)(0.419 * (signed char)(G_VAL - 128)) - (float)(0.081 * (signed char)(B_VAL - 128))));
+    GBS::VDS_Y_OFST::write((signed char)((float)(0.299f * (R_VAL - 128)) + (float)(0.587f * (G_VAL - 128)) + (float)(0.114f * (B_VAL - 128))));
+    GBS::VDS_U_OFST::write((signed char)((float)(-0.169f * (R_VAL - 128)) - (float)(0.331f * (G_VAL - 128)) + (float)(0.500f * (B_VAL - 128)))); //
+    GBS::VDS_V_OFST::write((signed char)((float)(0.500f * (R_VAL - 128)) - (float)(0.419f * (G_VAL - 128)) - (float)(0.081f * (B_VAL - 128))));
+    // printf(" RGB: 0x%02x,0x%02x,0x%02x \n",GBS::VDS_Y_OFST::read(),GBS::VDS_U_OFST::read(),GBS::VDS_V_OFST::read());
 }
 
 /*
@@ -120,7 +130,7 @@ IR
 */
 #include <IRremoteESP8266.h>
 #include <IRutils.h>
-const int kRecvPin = 2; // D4，infrared receiver PIN 
+const int kRecvPin = 2; // D4，infrared receiver PIN
 IRrecv irrecv(kRecvPin);
 decode_results results;
 
@@ -135,7 +145,7 @@ const char *final_version = full_version.c_str();
 #define MODEOPTION_MIN 0
 
 #define STEP 1
-#define OSD_CLOSE_TIME 16000            // 16 sec
+#define OSD_CLOSE_TIME 16000// *100            // 16 sec
 #define OSD_RESOLUTION_UP_TIME 1000     // 1 sec
 #define OSD_RESOLUTION_CLOSE_TIME 20000 // 20 sec
 #include "OSD_TV/remote.h"
@@ -177,6 +187,7 @@ typedef enum {
     OSD_SystemSettings_SVAVInput_Bright,
     OSD_SystemSettings_SVAVInput_contrast,
     OSD_SystemSettings_SVAVInput_saturation,
+    OSD_SystemSettings_SVAVInput_default,
     OSD_SystemSettings_SVAVInput_Compatibility,
     OSD_Resolution_RetainedSettings,
 
@@ -196,9 +207,9 @@ static uint8_t SvModeOptionChanged, AvModeOptionChanged;
 static bool SmoothOption;
 static bool LineOption;
 static bool SettingLineOptionChanged, SettingSmoothOptionChanged;
-static uint8_t Bright = 0;
-static uint8_t Contrast = 0;
-static uint8_t Saturation = 0;
+static uint8_t Bright = 128;
+static uint8_t Contrast = 128;
+static uint8_t Saturation = 128;
 
 uint8_t RGB_Com;
 
@@ -534,100 +545,34 @@ void UpDisplay(void)
 void Mode_Option(void);
 void Mode_Option(void)
 {
+    // 带调试信息的参数校验
+    static char max_index = sizeof(modes) / sizeof(modes[0]) - 1;
     if (SvModeOptionChanged) {
         SvModeOptionChanged = 0;
-        switch (SvModeOption) {
-            case 0: {
-                Send_TvMode(Auto);
-            } break;
-            case 1: {
-                Send_TvMode(Pal);
-            } break;
-            case 2: {
-                Send_TvMode(Ntsc_M);
-            } break;
-            case 3: {
-                Send_TvMode(Pal_60);
-            } break;
-            case 4: {
-                Send_TvMode(Ntsc443);
-            } break;
-            case 5: {
-                Send_TvMode(Ntsc_J);
-            } break;
-            case 6: {
-                Send_TvMode(Pal_N_wp);
-            } break;
-            case 7: {
-                Send_TvMode(Pal_M_wop);
-            } break;
-            case 8: {
-                Send_TvMode(Pal_M);
-            } break;
-            case 9: {
-                Send_TvMode(Pal_Cmb_N);
-            } break;
-            case 10: {
-                Send_TvMode(Pal_Cmb_N_wp);
-            } break;
-            case 11: {
-                Send_TvMode(Secam);
-            } break;
+
+
+        if (SvModeOption >= 0 && SvModeOption <= max_index) {
+            Send_TvMode(modes[SvModeOption]);
+        } else {
+            Send_TvMode(modes[1]); // 强制回退到 Auto 模式
         }
     }
-
     if (AvModeOptionChanged) {
         AvModeOptionChanged = 0;
 
-        switch (AvModeOption) {
-            case 0: {
-                Send_TvMode(Auto);
-            } break;
-            case 1: {
-                Send_TvMode(Pal);
-            } break;
-            case 2: {
-                Send_TvMode(Ntsc_M);
-            } break;
-            case 3: {
-                Send_TvMode(Pal_60);
-            } break;
-            case 4: {
-                Send_TvMode(Ntsc443);
-            } break;
-            case 5: {
-                Send_TvMode(Ntsc_J);
-            } break;
-            case 6: {
-                Send_TvMode(Pal_N_wp);
-            } break;
-            case 7: {
-                Send_TvMode(Pal_M_wop);
-            } break;
-            case 8: {
-                Send_TvMode(Pal_M);
-            } break;
-            case 9: {
-                Send_TvMode(Pal_Cmb_N);
-            } break;
-            case 10: {
-                Send_TvMode(Pal_Cmb_N_wp);
-            } break;
-            case 11: {
-                Send_TvMode(Secam);
-            } break;
+        if (AvModeOption >= 0 && AvModeOption <= max_index) {
+            Send_TvMode(modes[AvModeOption]);
+        } else {
+            Send_TvMode(modes[1]);
         }
     }
-
     if (SettingLineOptionChanged) {
         SettingLineOptionChanged = 0;
         Send_Line(LineOption);
-        // UpDisplay();
     }
     if (SettingSmoothOptionChanged) {
         SettingSmoothOptionChanged = 0;
         Send_Smooth(SmoothOption);
-        // UpDisplay();
     }
 }
 
@@ -1062,152 +1007,194 @@ void loadPresetMdSection()
 
 void writeProgramArrayNew(const uint8_t *programArray, boolean skipMDSection)
 {
-    uint16_t index = 0; 
-    uint8_t bank[16];
-    uint8_t y = 0;
-    uint16_t dump_count = 0;
-    FrameSync::cleanup();
+  uint16_t index = 0;
+  uint8_t bank[16];
+  uint8_t y = 0;
+  uint16_t dump_count = 0;
+  FrameSync::cleanup();
 
-    if (rto->videoStandardInput == 15) {
-        rto->videoStandardInput = 0;
-    }
+  if (rto->videoStandardInput == 15)
+  {
+    rto->videoStandardInput = 0;
+  }
 
-    rto->outModeHdBypass = 0; // Output HD Bypass
-    if (GBS::ADC_INPUT_SEL::read() == 0) {
-        rto->inputIsYpBpR = 1;
-    } else {
-        rto->inputIsYpBpR = 0;
-    }
+  rto->outModeHdBypass = 0; // Output HD Bypass
+  if (GBS::ADC_INPUT_SEL::read() == 0)
+  {
+    rto->inputIsYpBpR = 1;
+  }
+  else
+  {
+    rto->inputIsYpBpR = 0;
+  }
 
-    uint8_t reset46 = GBS::RESET_CONTROL_0x46::read();
-    uint8_t reset47 = GBS::RESET_CONTROL_0x47::read();
+  uint8_t reset46 = GBS::RESET_CONTROL_0x46::read();
+  uint8_t reset47 = GBS::RESET_CONTROL_0x47::read();
 
-    for (; y < 6; y++) {
-        writeOneByte(0xF0, (uint8_t)y);
-        switch (y) {
-            case 0:
-                for (int j = 0; j <= 1; j++) {
-                    for (int x = 0; x <= 15; x++) {
-                        if (j == 0 && x == 4) {
-                            if (rto->useHdmiSyncFix) {
-                                bank[x] = pgm_read_byte(programArray + index) & ~(1 << 0);
-                            } else {
-                                bank[x] = pgm_read_byte(programArray + index);
-                            }
-                        } else if (j == 0 && x == 6) {
-                            bank[x] = reset46;
-                        } else if (j == 0 && x == 7) {
-                            bank[x] = reset47;
-                        } else if (j == 0 && x == 9) {
-                            if (rto->useHdmiSyncFix) {
-                                bank[x] = pgm_read_byte(programArray + index) | (1 << 2);
-                            } else {
-                                bank[x] = pgm_read_byte(programArray + index);
-                            }
-                        } else {
-                            bank[x] = pgm_read_byte(programArray + index);
-                        }
-                        index++;
-                    }
-                    writeBytes(0x40 + (j * 16), bank, 16);
-                }
-                copyBank(bank, programArray, &index);
-                writeBytes(0x90, bank, 16);
-                break;
-            case 1:
-                for (int j = 0; j <= 2; j++) {
-                    copyBank(bank, programArray, &index);
-                    if (j == 0) {
-                        bank[0] = bank[0] & ~(1 << 5);
-                        bank[1] = bank[1] | (1 << 0);
-                        bank[12] = bank[12] & 0x0f;
-                        bank[13] = 0;
-                    }
-                    writeBytes(j * 16, bank, 16);
-                }
-                if (!skipMDSection) {
-                    loadPresetMdSection();
-                    if (rto->syncTypeCsync)
-                        GBS::MD_SEL_VGA60::write(0);
-                    else
-                        GBS::MD_SEL_VGA60::write(1);
-
-                    GBS::MD_HD1250P_CNTRL::write(rto->medResLineCount);
-                }
-                break;
-            case 2:
-                loadPresetDeinterlacerSection();
-                break;
-            case 3:
-                for (int j = 0; j <= 7; j++) {
-                    copyBank(bank, programArray, &index);
-
-                    writeBytes(j * 16, bank, 16);
-                }
-
-                for (int x = 0; x <= 15; x++) {
-                    writeOneByte(0x80 + x, 0x00);
-                }
-                break;
-            case 4:
-                for (int j = 0; j <= 5; j++) {
-                    copyBank(bank, programArray, &index);
-                    writeBytes(j * 16, bank, 16);
-                }
-                break;
-            case 5:
-                for (int j = 0; j <= 6; j++) {
-                    for (int x = 0; x <= 15; x++) {
-                        bank[x] = pgm_read_byte(programArray + index);
-                        if (index == 322) {
-                            if (rto->inputIsYpBpR && Info_sate == 0) //&& SeleInputSource == S_YUV)
-                                bitClear(bank[x], 6);
-                            else if (rto->inputIsYpBpR == false && Info_sate == 0) //&& (SeleInputSource == S_VGA || SeleInputSource == S_RGBs))
-                                bitSet(bank[x], 6);
-                        }
-
-                        if (index == 323) {
-                            if (rto->inputIsYpBpR && Info_sate == 0) //&& SeleInputSource == S_YUV)
-                            {
-                                bitSet(bank[x], 1);
-                                bitClear(bank[x], 2);
-                                bitSet(bank[x], 3);
-                            } else if (rto->inputIsYpBpR == false && Info_sate == 0) //&& (SeleInputSource == S_VGA || SeleInputSource == S_RGBs))
-                            {
-                                bitClear(bank[x], 1);
-                                bitClear(bank[x], 2);
-                                bitClear(bank[x], 3);
-                            }
-                        }
-
-                        if (index == 352) {
-                            bank[x] = 0x02;
-                        }
-                        if (index == 375) {
-                            if (videoStandardInputIsPalNtscSd()) {
-                                bank[x] = 0x6b;
-                            } else {
-                                bank[x] = 0x02;
-                            }
-                        }
-                        if (index == 382) {
-                            bitSet(bank[x], 5);
-                        }
-                        if (index == 407) {
-                            bitSet(bank[x], 0);
-                        }
-                        index++;
-                    }
-                    writeBytes(j * 16, bank, 16);
-                }
-                break;
+  for (; y < 6; y++)
+  {
+    writeOneByte(0xF0, (uint8_t)y);
+    switch (y)
+    {
+    case 0:
+      for (int j = 0; j <= 1; j++)
+      {
+        for (int x = 0; x <= 15; x++)
+        {
+          if (j == 0 && x == 4)
+          {
+            if (rto->useHdmiSyncFix)
+            {
+              bank[x] = pgm_read_byte(programArray + index) & ~(1 << 0);
+            }
+            else
+            {
+              bank[x] = pgm_read_byte(programArray + index);
+            }
+          }
+          else if (j == 0 && x == 6)
+          {
+            bank[x] = reset46;
+          }
+          else if (j == 0 && x == 7)
+          {
+            bank[x] = reset47;
+          }
+          else if (j == 0 && x == 9)
+          {
+            if (rto->useHdmiSyncFix)
+            {
+              bank[x] = pgm_read_byte(programArray + index) | (1 << 2);
+            }
+            else
+            {
+              bank[x] = pgm_read_byte(programArray + index);
+            }
+          }
+          else
+          {
+            bank[x] = pgm_read_byte(programArray + index);
+          }
+          index++;
         }
-    }
+        writeBytes(0x40 + (j * 16), bank, 16);
+      }
+      copyBank(bank, programArray, &index);
+      writeBytes(0x90, bank, 16);
+      break;
+    case 1:
+      for (int j = 0; j <= 2; j++)
+      {
+        copyBank(bank, programArray, &index);
+        if (j == 0)
+        {
+          bank[0] = bank[0] & ~(1 << 5);
+          bank[1] = bank[1] | (1 << 0);
+          bank[12] = bank[12] & 0x0f;
+          bank[13] = 0;
+        }
+        writeBytes(j * 16, bank, 16);
+      }
+      if (!skipMDSection)
+      {
+        loadPresetMdSection();
+        if (rto->syncTypeCsync)
+          GBS::MD_SEL_VGA60::write(0);
+        else
+          GBS::MD_SEL_VGA60::write(1);
 
-    if (uopt->preferScalingRgbhv && rto->isValidForScalingRGBHV) {
-        GBS::GBS_OPTION_SCALING_RGBHV::write(1);
-        rto->videoStandardInput = 3;
+        GBS::MD_HD1250P_CNTRL::write(rto->medResLineCount);
+      }
+      break;
+    case 2:
+      loadPresetDeinterlacerSection();
+      break;
+    case 3:
+      for (int j = 0; j <= 7; j++)
+      {
+        copyBank(bank, programArray, &index);
+
+        writeBytes(j * 16, bank, 16);
+      }
+
+      for (int x = 0; x <= 15; x++)
+      {
+        writeOneByte(0x80 + x, 0x00);
+      }
+      break;
+    case 4:
+      for (int j = 0; j <= 5; j++)
+      {
+        copyBank(bank, programArray, &index);
+        writeBytes(j * 16, bank, 16);
+      }
+      break;
+    case 5:
+      for (int j = 0; j <= 6; j++)
+      {
+        for (int x = 0; x <= 15; x++)
+        {
+          bank[x] = pgm_read_byte(programArray + index);
+          if (index == 322)
+          {
+            if (rto->inputIsYpBpR && Info_sate == 0) //&& SeleInputSource == S_YUV)
+              bitClear(bank[x], 6);
+            else if (rto->inputIsYpBpR == false && Info_sate == 0) //&& (SeleInputSource == S_VGA || SeleInputSource == S_RGBs))
+              bitSet(bank[x], 6);
+          }
+
+          if (index == 323)
+          {
+            if (rto->inputIsYpBpR && Info_sate == 0) //&& SeleInputSource == S_YUV)
+            {
+              bitSet(bank[x], 1);
+              bitClear(bank[x], 2);
+              bitSet(bank[x], 3);
+            }
+            else if (rto->inputIsYpBpR == false && Info_sate == 0) //&& (SeleInputSource == S_VGA || SeleInputSource == S_RGBs))
+            {
+              bitClear(bank[x], 1);
+              bitClear(bank[x], 2);
+              bitClear(bank[x], 3);
+            }
+          }
+
+          if (index == 352)
+          {
+            bank[x] = 0x02;
+          }
+          if (index == 375)
+          {
+            if (videoStandardInputIsPalNtscSd())
+            {
+              bank[x] = 0x6b;
+            }
+            else
+            {
+              bank[x] = 0x02;
+            }
+          }
+          if (index == 382)
+          {
+            bitSet(bank[x], 5);
+          }
+          if (index == 407)
+          {
+            bitSet(bank[x], 0);
+          }
+          index++;
+        }
+        writeBytes(j * 16, bank, 16);
+      }
+      break;
     }
+  }
+
+  if (uopt->preferScalingRgbhv && rto->isValidForScalingRGBHV)
+  {
+    GBS::GBS_OPTION_SCALING_RGBHV::write(1);
+    rto->videoStandardInput = 3;
+  }
 }
 
 void activeFrameTimeLockInitialSteps()
@@ -1420,6 +1407,7 @@ void applyComponentColorMixing()
     GBS::VDS_Y_GAIN::write(0x64);
     GBS::VDS_UCOS_GAIN::write(0x19);
     GBS::VDS_VCOS_GAIN::write(0x19);
+
     GBS::VDS_Y_OFST::write(0xfe);
     GBS::VDS_U_OFST::write(0x01);
 }
@@ -1449,53 +1437,42 @@ void toggleIfAutoOffset()
 void applyYuvPatches()
 {
     GBS::ADC_RYSEL_R::write(1);
-    GBS::ADC_RYSEL_B::write(1);
     GBS::ADC_RYSEL_G::write(0);
-    GBS::DEC_MATRIX_BYPS::write(1); 
-    GBS::IF_MATRIX_BYPS::write(1);
+    GBS::ADC_RYSEL_B::write(1);
+    GBS::DEC_MATRIX_BYPS::write(1);   //YUV 转RGB
+    GBS::IF_MATRIX_BYPS::write(1);   // 1 旁路 0执行 rgb2yuv
 
     if (GBS::GBS_PRESET_CUSTOM::read() == 0) {
 
-        GBS::VDS_Y_GAIN::write(0x80);
-        GBS::VDS_UCOS_GAIN::write(0x1c);
-        GBS::VDS_VCOS_GAIN::write(0x29);
-        if (BriorCon == 1) {
-            GBS::VDS_Y_OFST::write(0x0E);
+        GBS::VDS_Y_GAIN::write(128);
+        GBS::VDS_UCOS_GAIN::write(28);
+        GBS::VDS_VCOS_GAIN::write(41);
+        
+        GBS::ADC_RGCTRL::write(0x33);
+        GBS::ADC_GGCTRL::write(0x33);
+        GBS::ADC_BGCTRL::write(0x33);
 
-            GBS::ADC_RGCTRL::write(0x33);
-            GBS::ADC_GGCTRL::write(0x33);
-            GBS::ADC_BGCTRL::write(0x33);
-        } else if (BriorCon == 2) {
-            // GBS::VDS_Y_OFST::write(-0x22);
-            // GBS::ADC_RGCTRL::write(0x56);
-            // GBS::ADC_GGCTRL::write(0x56);
-            // GBS::ADC_BGCTRL::write(0x56);
+        GBS::VDS_Y_OFST::write(0x0E);//0x0a
+        GBS::VDS_U_OFST::write(0x03);//0x05
+        GBS::VDS_V_OFST::write(0x04);//0x06
 
-            GBS::VDS_Y_OFST::write(0x0E);
-            GBS::ADC_RGCTRL::write(0x33);
-            GBS::ADC_GGCTRL::write(0x33);
-            GBS::ADC_BGCTRL::write(0x33);
-        }
-        GBS::VDS_U_OFST::write(0x03);
-        GBS::VDS_V_OFST::write(0x03);
-        if (rto->videoStandardInput >= 5 && rto->videoStandardInput <= 7) {
-        }
     }
-    if (uopt->wantOutputComponent) {
+    if (uopt->wantOutputComponent) 
+    {
         applyComponentColorMixing();
     }
 
-    R_VAL = (((signed char)((signed char)GBS::VDS_Y_OFST::read()) + (float)(1.402 * (signed char)((signed char)GBS::VDS_V_OFST::read())))) + 128;
-    G_VAL = (((signed char)((signed char)GBS::VDS_Y_OFST::read()) - (float)(0.344136 * (signed char)((signed char)GBS::VDS_U_OFST::read())) - 0.714136 * (signed char)((signed char)GBS::VDS_V_OFST::read()))) + 128;
-    B_VAL = (((signed char)((signed char)GBS::VDS_Y_OFST::read()) + (float)(1.772 * (signed char)((signed char)GBS::VDS_U_OFST::read())))) + 128;
+    R_VAL = ((GBS::VDS_Y_OFST::read() + (float)(1.402 * (GBS::VDS_V_OFST::read())))) + 128;
+    G_VAL = ((GBS::VDS_Y_OFST::read() - (float)(0.344136  * (GBS::VDS_U_OFST::read())) - 0.714136 * GBS::VDS_V_OFST::read())) + 128;
+    B_VAL = ((GBS::VDS_Y_OFST::read() + (float)(1.772 * (GBS::VDS_U_OFST::read())))) + 128;
 }
 
 void applyRGBPatches()
 {
     GBS::ADC_RYSEL_R::write(0);
-    GBS::ADC_RYSEL_B::write(0);
     GBS::ADC_RYSEL_G::write(0);
-    GBS::DEC_MATRIX_BYPS::write(0);
+    GBS::ADC_RYSEL_B::write(0);
+    GBS::DEC_MATRIX_BYPS::write(0);   //0: 跳过 CSC，信号直接通过
     GBS::IF_MATRIX_BYPS::write(1);
 
     if (GBS::GBS_PRESET_CUSTOM::read() == 0) {
@@ -1511,9 +1488,9 @@ void applyRGBPatches()
         applyComponentColorMixing();
     }
 
-    R_VAL = (((signed char)((signed char)GBS::VDS_Y_OFST::read()) + (float)(1.402 * (signed char)((signed char)GBS::VDS_V_OFST::read())))) + 128;
-    G_VAL = (((signed char)((signed char)GBS::VDS_Y_OFST::read()) - (float)(0.344136 * (signed char)((signed char)GBS::VDS_U_OFST::read())) - 0.714136 * (signed char)((signed char)GBS::VDS_V_OFST::read()))) + 128;
-    B_VAL = (((signed char)((signed char)GBS::VDS_Y_OFST::read()) + (float)(1.772 * (signed char)((signed char)GBS::VDS_U_OFST::read())))) + 128;
+    R_VAL = ((GBS::VDS_Y_OFST::read() + (float)(1.402 * (GBS::VDS_V_OFST::read())))) + 128;
+    G_VAL = ((GBS::VDS_Y_OFST::read() - (float)(0.344136  * (GBS::VDS_U_OFST::read())) - 0.714136 * GBS::VDS_V_OFST::read())) + 128;
+    B_VAL = ((GBS::VDS_Y_OFST::read() + (float)(1.772 * (GBS::VDS_U_OFST::read())))) + 128;
 }
 
 void setAdcGain(uint8_t gain)
@@ -4302,10 +4279,13 @@ void applyPresets(uint8_t result)
         }
     }
 
-    if (uopt->PalForce60 == 1) {
-        if (uopt->presetPreference != 2) {
+    if (uopt->PalForce60 == 1) 
+    {
+        if (uopt->presetPreference != 2) 
+        {
 
-            if (result == 2 || result == 4) {
+            if (result == 2 || result == 4) 
+            {
                 Serial.println(F("PAL@50 to 60Hz"));
                 rto->presetIsPalForce60 = 1;
             }
@@ -4338,7 +4318,7 @@ void applyPresets(uint8_t result)
         if (uopt->presetPreference == 0) {
             writeProgramArrayNew(ntsc_240p, false);
         } else if (uopt->presetPreference == 1) {
-            writeProgramArrayNew(ntsc_720x480, false);
+            writeProgramArrayNew(ntsc_720x480, false);   //ntsc_720x480   pal_768x576
         } else if (uopt->presetPreference == 3) {
             writeProgramArrayNew(ntsc_1280x720, false);
         }
@@ -4358,7 +4338,7 @@ void applyPresets(uint8_t result)
         }
 #endif
         else if (uopt->presetPreference == 5) {
-            writeProgramArrayNew(ntsc_1920x1080, false);
+            writeProgramArrayNew(ntsc_1920x1080, false);   //ntsc_1920x1080
         } else if (uopt->presetPreference == 6) {
             writeProgramArrayNew(ntsc_downscale, false);
         }
@@ -7525,8 +7505,9 @@ void setup()
                 SmoothOption = 0;
 
             LineOption = (uint8_t)(f.read() - '0');
+            // LineOption = 1;
             if (LineOption > 1)
-                LineOption = 0;
+                LineOption = 1;
 
             BriorCon = (uint8_t)(f.read() - '0');
             if (BriorCon > 2)
@@ -7540,15 +7521,15 @@ void setup()
 
 
             Bright = (uint8_t)(f.read() - '0') * 100 + (uint8_t)(f.read() - '0') * 10 + (uint8_t)(f.read() - '0');
-            if (Bright > 0xFF - 1)
+            if ((Bright > 0xFF - 1) || (Bright == 0))
                 Bright = 0x80;
 
             Contrast = (uint8_t)(f.read() - '0') * 100 + (uint8_t)(f.read() - '0') * 10 + (uint8_t)(f.read() - '0');
-            if (Contrast > 0xFF - 1)
+            if ((Contrast > 0xFF - 1) || (Contrast == 0))
                 Contrast = 0x80;
 
             Saturation = (uint8_t)(f.read() - '0') * 100 + (uint8_t)(f.read() - '0') * 10 + (uint8_t)(f.read() - '0');
-            if (Saturation > 0xFF - 1)
+            if ((Saturation > 0xFF - 1) || (Saturation == 0))
                 Saturation = 0x80;
             // RGBs_Com = (uint8_t)(f.read() - '0');
             // RGsB_Com = (uint8_t)(f.read() - '0');
@@ -9019,7 +9000,7 @@ void handleType2Command(char argument)
                 videoMode = rto->videoStandardInput; // 
 
             if (argument == 'f')
-                uopt->presetPreference = Output960P; // 1280x960
+                uopt->presetPreference = Output960P; //Output960P; // 1280x960
             if (argument == 'g')
                 uopt->presetPreference = Output720P; // 1280x720
             if (argument == 'h')
@@ -9449,7 +9430,8 @@ void handleType2Command(char argument)
             break;
         case 'U': // Default
             // Сброс
-            if (GBS::ADC_INPUT_SEL::read() == 1) {
+            if (GBS::ADC_INPUT_SEL::read() == 1)     //（RGB）RGB1 channel
+            {
                 GBS::VDS_Y_GAIN::write(128);
                 GBS::VDS_UCOS_GAIN::write(28);
                 GBS::VDS_VCOS_GAIN::write(41);
@@ -9462,34 +9444,26 @@ void handleType2Command(char argument)
                 GBS::ADC_GOFCTRL::write(adco->g_off);
                 GBS::ADC_BOFCTRL::write(adco->b_off);
                 ; // SerialMprintln("RGB:defauit");
-            } else {
-                GBS::VDS_Y_GAIN::write(128);
-                GBS::VDS_UCOS_GAIN::write(28);
-                GBS::VDS_VCOS_GAIN::write(41);
-                // GBS::VDS_Y_OFST::write(254);
-                GBS::VDS_U_OFST::write(3); //+16
-                GBS::VDS_V_OFST::write(3);
+            } 
+            else //（YUV）RGB0 channel
+            {   
+
+                GBS::VDS_Y_GAIN::write(0x80);
+                GBS::VDS_UCOS_GAIN::write(0x1c);//0x1c
+                GBS::VDS_VCOS_GAIN::write(0x29);//0x29
+
+                GBS::VDS_Y_OFST::write(0x0E); 
+                GBS::VDS_U_OFST::write(0x03); 
+                GBS::VDS_V_OFST::write(0x04);
+
                 GBS::ADC_ROFCTRL::write(adco->r_off);
                 GBS::ADC_GOFCTRL::write(adco->g_off);
                 GBS::ADC_BOFCTRL::write(adco->b_off);
 
-                if (BriorCon == 1) // RGB
-                {
-                    GBS::VDS_Y_OFST::write(0x0E);
-                } else if (BriorCon == 2) // YUV
-                {
-                    // GBS::VDS_Y_OFST::write(-0x22);
-                    GBS::VDS_Y_OFST::write(0x0E);
-                };
-
-                // (signed char)GBS::VDS_Y_OFST::read()  = (signed char)GBS::VDS_Y_OFST::read();
-                // (signed char)GBS::VDS_U_OFST::read()  = (signed char)GBS::VDS_U_OFST::read();
-                // (signed char)GBS::VDS_V_OFST::read()  = (signed char)GBS::VDS_V_OFST::read();
-
-                R_VAL = (((signed char)((signed char)GBS::VDS_Y_OFST::read()) + (float)(1.402 * (signed char)((signed char)GBS::VDS_V_OFST::read())))) + 128;
-                G_VAL = (((signed char)((signed char)GBS::VDS_Y_OFST::read()) - (float)(0.344136 * (signed char)((signed char)GBS::VDS_U_OFST::read())) - 0.714136 * (signed char)((signed char)GBS::VDS_V_OFST::read()))) + 128;
-                B_VAL = (((signed char)((signed char)GBS::VDS_Y_OFST::read()) + (float)(1.772 * (signed char)((signed char)GBS::VDS_U_OFST::read())))) + 128;
             }
+            R_VAL = ((GBS::VDS_Y_OFST::read() + (float)(1.402 * (GBS::VDS_V_OFST::read())))) + 128;
+            G_VAL = ((GBS::VDS_Y_OFST::read() - (float)(0.344136  * (GBS::VDS_U_OFST::read())) - 0.714136 * GBS::VDS_V_OFST::read())) + 128;
+            B_VAL = ((GBS::VDS_Y_OFST::read() + (float)(1.772 * (GBS::VDS_U_OFST::read())))) + 128;   
             break;
         case 'I':
             if (IR == 0) {
@@ -13837,7 +13811,7 @@ void OSD_selectOption()
                         COl_L = 1;
                         OSD_menu_F(OSD_CROSS_TOP);
                         OSD_menu_F('^');
-                        oled_menuItem = OSD_SystemSettings_SVAVInput_Smooth;
+                        oled_menuItem = OSD_SystemSettings_SVAVInput_DoubleLine;
                     }
                     break;
                 case IRKeyMenu:
@@ -13868,70 +13842,7 @@ void OSD_selectOption()
         }
     }
 
-    // else if (oled_menuItem == OSD_SystemSettings_SVAVInput_DoubleLine) {
-    //     if (OLED_clear_flag)
-    //         display.clear();
-    //     OLED_clear_flag = ~0;
-    //     display.setColor(OLEDDISPLAY_COLOR::WHITE);
-    //     display.setTextAlignment(TEXT_ALIGN_LEFT);
-    //     display.setFont(ArialMT_Plain_16);
-    //     display.drawString(1, 0, "M>Sys>SvAv Set");
-    //     display.drawString(1, 22, "DoubleLine");
-    //     if (LineOption) {
-    //         display.drawString(1, 44, "2X");
-    //     } else {
-    //         display.drawString(1, 44, "1X");
-    //     }
-    //     display.display();
-
-    //     if (results.value == IRKeyDown || results.value == IRKeyUp) {
-    //         OSD_c1(icon4, P0, yellow);
-    //         OSD_c2(icon4, P0, blue_fill);
-    //         OSD_c3(icon4, P0, blue_fill);
-
-    //         OSD_menu_F('^');
-    //     }
-    //     OSD_menu_F('&');
-    //     if (irrecv.decode(&results)) {
-    //         decode_flag = 1;
-    //         switch (results.value) {
-    //             case IRKeyMenu:
-    //                 COl_L = 1;
-    //                 OSD_menu_F(OSD_CROSS_TOP);
-    //                 OSD_menu_F('i'); //
-    //                 oled_menuItem = OSD_SystemSettings_SVAVInput;
-    //                 break;
-
-    //             // case IRKeyUp:
-    //             //   COl_L = 2;
-    //             //   OSD_menu_F('^');
-    //             //   oled_menuItem = OSD_SystemSettings_SVAVInput_Smooth;
-    //             //   break;
-    //             case IRKeyDown:
-    //                 COl_L = 2;
-    //                 OSD_menu_F('^');
-    //                 oled_menuItem = OSD_SystemSettings_SVAVInput_Smooth;
-    //                 break;
-
-    //             case IRKeyOk:
-    //                 LineOption = !LineOption;
-    //                 SettingLineOptionChanged = 1;
-    //                 break;
-    //             // case IRKeyRight:
-    //             //   LineOption = !LineOption;
-    //             //   SettingLineOptionChanged = 1;
-    //             //   break;
-    //             case IRKeyExit:
-    //                 OSD_menu_F(OSD_CROSS_TOP);
-    //                 OSD_menu_F('1');
-    //                 oled_menuItem = OSD_Input;
-    //                 break;
-    //         }
-    //         irrecv.resume();
-    //     }
-    // }
-
-    else if (oled_menuItem == OSD_SystemSettings_SVAVInput_Smooth) {
+    else if (oled_menuItem == OSD_SystemSettings_SVAVInput_DoubleLine) {
         if (OLED_clear_flag)
             display.clear();
         OLED_clear_flag = ~0;
@@ -13939,11 +13850,11 @@ void OSD_selectOption()
         display.setTextAlignment(TEXT_ALIGN_LEFT);
         display.setFont(ArialMT_Plain_16);
         display.drawString(1, 0, "M>Sys>SvAv Set");
-        display.drawString(1, 22, "Smooth");
-        if (SmoothOption) {
-            display.drawString(1, 44, "ON");
+        display.drawString(1, 22, "DoubleLine");
+        if (LineOption) {
+            display.drawString(1, 44, "2X");
         } else {
-            display.drawString(1, 44, "OFF");
+            display.drawString(1, 44, "1X");
         }
         display.display();
 
@@ -13964,13 +13875,76 @@ void OSD_selectOption()
                     OSD_menu_F('i'); //
                     oled_menuItem = OSD_SystemSettings_SVAVInput;
                     break;
+
                 // case IRKeyUp:
-                //     COl_L = 1;
-                //     OSD_menu_F('^');
-                //     oled_menuItem = OSD_SystemSettings_SVAVInput_DoubleLine;
-                //     break;
+                //   COl_L = 2;
+                //   OSD_menu_F('^');
+                //   oled_menuItem = OSD_SystemSettings_SVAVInput_Smooth;
+                //   break;
                 case IRKeyDown:
                     COl_L = 2;
+                    OSD_menu_F('^');
+                    oled_menuItem = OSD_SystemSettings_SVAVInput_Smooth;
+                    break;
+
+                case IRKeyOk:
+                    LineOption = !LineOption;
+                    SettingLineOptionChanged = 1;
+                    break;
+                // case IRKeyRight:
+                //   LineOption = !LineOption;
+                //   SettingLineOptionChanged = 1;
+                //   break;
+                case IRKeyExit:
+                    OSD_menu_F(OSD_CROSS_TOP);
+                    OSD_menu_F('1');
+                    oled_menuItem = OSD_Input;
+                    break;
+            }
+            irrecv.resume();
+        }
+    }
+
+    else if (oled_menuItem == OSD_SystemSettings_SVAVInput_Smooth) {
+        if (OLED_clear_flag)
+            display.clear();
+        OLED_clear_flag = ~0;
+        display.setColor(OLEDDISPLAY_COLOR::WHITE);
+        display.setTextAlignment(TEXT_ALIGN_LEFT);
+        display.setFont(ArialMT_Plain_16);
+        display.drawString(1, 0, "M>Sys>SvAv Set");
+        display.drawString(1, 22, "Smooth");
+        if (SmoothOption) {
+            display.drawString(1, 44, "ON");
+        } else {
+            display.drawString(1, 44, "OFF");
+        }
+        display.display();
+
+        if (results.value == IRKeyDown || results.value == IRKeyUp) {
+            OSD_c1(icon4, P0, blue_fill);
+            OSD_c2(icon4, P0, yellow);
+            OSD_c3(icon4, P0, blue_fill);
+
+            OSD_menu_F('^');
+        }
+        OSD_menu_F('&');
+        if (irrecv.decode(&results)) {
+            decode_flag = 1;
+            switch (results.value) {
+                case IRKeyMenu:
+                    COl_L = 1;
+                    OSD_menu_F(OSD_CROSS_TOP);
+                    OSD_menu_F('i'); //
+                    oled_menuItem = OSD_SystemSettings_SVAVInput;
+                    break;
+                case IRKeyUp:
+                    COl_L = 1;
+                    OSD_menu_F('^');
+                    oled_menuItem = OSD_SystemSettings_SVAVInput_DoubleLine;
+                    break;
+                case IRKeyDown:
+                    COl_L = 3;
                     OSD_menu_F('^');
                     oled_menuItem = OSD_SystemSettings_SVAVInput_Bright;
                     break;
@@ -14007,8 +13981,8 @@ void OSD_selectOption()
 
         if (results.value == IRKeyDown || results.value == IRKeyUp) {
             OSD_c1(icon4, P0, blue_fill);
-            OSD_c2(icon4, P0, yellow);
-            OSD_c3(icon4, P0, blue_fill);
+            OSD_c2(icon4, P0, blue_fill);
+            OSD_c3(icon4, P0, yellow);
 
             OSD_menu_F('^');
         }
@@ -14024,14 +13998,18 @@ void OSD_selectOption()
                     saveUserPrefs();
                     break;
                 case IRKeyUp:
-                    COl_L = 1;
+                    COl_L = 2;
                     OSD_menu_F('^');
                     oled_menuItem = OSD_SystemSettings_SVAVInput_Smooth;
                     break;
                 case IRKeyDown:
 
-                    COl_L = 3;
-                    OSD_menu_F('^');
+                    // COl_L = 3;
+                    // OSD_menu_F('^');
+                    // oled_menuItem = OSD_SystemSettings_SVAVInput_contrast;
+
+                    OSD_menu_F(OSD_CROSS_TOP);
+                    OSD_menu_F('z');
                     oled_menuItem = OSD_SystemSettings_SVAVInput_contrast;
                     break;
                 case IRKeyRight:
@@ -14069,13 +14047,13 @@ void OSD_selectOption()
         display.display();
 
         if (results.value == IRKeyDown || results.value == IRKeyUp) {
-            OSD_c1(icon4, P0, blue_fill);
+            OSD_c1(icon4, P0, yellow);
             OSD_c2(icon4, P0, blue_fill);
-            OSD_c3(icon4, P0, yellow);
+            OSD_c3(icon4, P0, blue_fill);
 
-            OSD_menu_F('^');
+            OSD_menu_F('z');
         }
-        OSD_menu_F('&');
+        OSD_menu_F('A');
         if (irrecv.decode(&results)) {
             decode_flag = 1;
             switch (results.value) {
@@ -14086,18 +14064,23 @@ void OSD_selectOption()
                     oled_menuItem = OSD_SystemSettings_SVAVInput;
                     break;
                 case IRKeyUp:
-                    // OSD_menu_F(OSD_CROSS_BOTTOM);
-                    // OSD_menu_F('^');
-                    // oled_menuItem = OSD_SystemSettings_SVAVInput_Bright;
-                    COl_L = 2;
+                    OSD_menu_F(OSD_CROSS_BOTTOM);
                     OSD_menu_F('^');
                     oled_menuItem = OSD_SystemSettings_SVAVInput_Bright;
+                    // COl_L = 2;
+                    // OSD_menu_F('^');
+                    // oled_menuItem = OSD_SystemSettings_SVAVInput_Bright;
                     break;
 
                 case IRKeyDown:
-                    OSD_menu_F(OSD_CROSS_TOP);
+                    // OSD_menu_F(OSD_CROSS_TOP);
+                    // OSD_menu_F('z');
+                    // oled_menuItem = OSD_SystemSettings_SVAVInput_saturation;
+
+                    COl_L = 2;
                     OSD_menu_F('z');
                     oled_menuItem = OSD_SystemSettings_SVAVInput_saturation;
+
                     break;
                 case IRKeyRight:
                     Contrast = MIN(Contrast + STEP, 254);
@@ -14134,8 +14117,8 @@ void OSD_selectOption()
         display.display();
 
         if (results.value == IRKeyDown || results.value == IRKeyUp) {
-            OSD_c1(icon4, P0, yellow);
-            OSD_c2(icon4, P0, blue_fill);
+            OSD_c1(icon4, P0, blue_fill);
+            OSD_c2(icon4, P0, yellow);
             OSD_c3(icon4, P0, blue_fill);
 
             OSD_menu_F('z');
@@ -14151,13 +14134,18 @@ void OSD_selectOption()
                     oled_menuItem = OSD_SystemSettings_SVAVInput;
                     break;
                 case IRKeyUp:
-                    // COl_L = 1;
-                    // OSD_menu_F('z');
-                    // oled_menuItem = OSD_SystemSettings_SVAVInput_contrast;
-
-                    OSD_menu_F(OSD_CROSS_BOTTOM);
-                    OSD_menu_F('^');
+                    COl_L = 1;
+                    OSD_menu_F('z');
                     oled_menuItem = OSD_SystemSettings_SVAVInput_contrast;
+
+                    // OSD_menu_F(OSD_CROSS_BOTTOM);
+                    // OSD_menu_F('^');
+                    // oled_menuItem = OSD_SystemSettings_SVAVInput_contrast;
+                    break;
+                case IRKeyDown:
+                    COl_L = 3;
+                    OSD_menu_F('z');
+                    oled_menuItem = OSD_SystemSettings_SVAVInput_default;    
                     break;
                 case IRKeyRight:
                     Saturation = MIN(Saturation + STEP, 254);
@@ -14165,7 +14153,7 @@ void OSD_selectOption()
                     // printf("saturation: 0x%02x \n",Saturation);
                     break;
                 case IRKeyLeft:
-                    Saturation = MAX(Saturation - STEP, 0);
+                    Saturation = MAX(Saturation - STEP, 0);       
                     SetReg(0xe3, Saturation);
                     // printf("saturation: 0x%02x \n",Saturation);
                     break;
@@ -14182,6 +14170,56 @@ void OSD_selectOption()
         }
     }
 
+
+    else if (oled_menuItem == OSD_SystemSettings_SVAVInput_default) {
+        if (OLED_clear_flag)
+            display.clear();
+        OLED_clear_flag = ~0;
+        display.setColor(OLEDDISPLAY_COLOR::WHITE);
+        display.setTextAlignment(TEXT_ALIGN_LEFT);
+        display.setFont(ArialMT_Plain_16);
+        display.drawString(1, 0, "M>Sys>SvAv Set");
+        display.drawString(1, 22, "Default");
+        display.display();
+
+        if (results.value == IRKeyDown || results.value == IRKeyUp) {
+            OSD_c1(icon4, P0, blue_fill);
+            OSD_c2(icon4, P0, blue_fill);
+            OSD_c3(icon4, P0, yellow);
+
+            OSD_menu_F('z');
+        }
+        OSD_menu_F('A');
+        if (irrecv.decode(&results)) {
+            decode_flag = 1;
+            switch (results.value) {
+                case IRKeyMenu:
+                    COl_L = 1;
+                    OSD_menu_F(OSD_CROSS_TOP);
+                    OSD_menu_F('i'); //
+                    oled_menuItem = OSD_SystemSettings_SVAVInput;
+                    break;
+                case IRKeyUp:
+                    COl_L = 2;
+                    OSD_menu_F('z');
+                    oled_menuItem = OSD_SystemSettings_SVAVInput_saturation;
+                    break;
+                case IRKeyOk:
+                    SetReg('D', 'E');
+                    Bright = 128;
+                    Contrast = 128;
+                    Saturation = 128;
+                    saveUserPrefs();
+                    break;
+                case IRKeyExit:
+                    OSD_menu_F(OSD_CROSS_TOP);
+                    OSD_menu_F('1');
+                    oled_menuItem = OSD_Input;
+                    break;
+            }
+            irrecv.resume();
+        }
+    }
 
     else if (oled_menuItem == OSD_SystemSettings_SVAVInput_Compatibility) {
         if (OLED_clear_flag)
@@ -16434,24 +16472,49 @@ void OSD_selectOption()
         static unsigned long Tim_info = 0;
         if ((millis() - Tim_info) >= 1000) {
             S0_Read_Resolution = GBS::REG_S0_00::read();
+
+            // GBS::IF_LD_RAM_BYPS::write(1);
+            // printf( "Scanning method: %d\n",GBS::STATUS_SYNC_PROC_VTOTAL::read() );   // 0x%02x  
+            // printf( "Scanning method: %d\n",GBS::STATUS_VDS_VERT_COUNT::read() );
+            // printf( "H_TOTAL: %d      ",(GBS::H_TOTAL_HIGH::read() << 8) + GBS::H_TOTAL_LOW::read() *4  );
+
+            // printf( "V_TOTAL: %d\n",(GBS::V_TOTAL_HIGH::read() << 7) + GBS::V_TOTAL_LOW::read() );
+
             Tim_info = millis();
         }
 
-        if (S0_Read_Resolution & 0x80) {
-            if (S0_Read_Resolution & 0x40) {
+        if (S0_Read_Resolution & 0x80) 
+        {
+            if (S0_Read_Resolution & 0x40) 
+            {
                 Osd_Display(0xFF, "   576p");
-            } else if (S0_Read_Resolution & 0x20) {
-                Osd_Display(0xFF, "   576i");
-            } else if (S0_Read_Resolution & 0x10) {
+            } 
+            else if (S0_Read_Resolution & 0x20) 
+            {
+                if( abs(GBS::STATUS_SYNC_PROC_VTOTAL::read() - 312) <= 10)
+                  Osd_Display(0xFF, "   288p");
+                else  
+                  Osd_Display(0xFF, "   576i");
+            } 
+            else if (S0_Read_Resolution & 0x10) 
+            {
                 Osd_Display(0xFF, "   480p");
-            } else if (S0_Read_Resolution & 0x08) {
-                Osd_Display(0xFF, "   240p");
-            } else {
+            } 
+            else if (S0_Read_Resolution & 0x08)   
+            {
+                if( abs(GBS::STATUS_SYNC_PROC_VTOTAL::read() - 262) <= 10)
+                  Osd_Display(0xFF, "   240p");
+                else
+                  Osd_Display(0xFF, "   480i");
+            } 
+            else 
                 Osd_Display(0xFF, "   Err");
-            }
-        } else {
+        } 
+        else
             Osd_Display(0xFF, "   Err");
-        }
+
+
+
 
         // clean_up(stroca3, 17, 0); // 17  31
         // colour1 = yellow;
@@ -16521,12 +16584,12 @@ void OSD_selectOption()
             OSD_c2((T_tim / 10) + '0', P11, main0);
             OSD_c2((T_tim % 10) + '0', P12, main0);
 
-            Osd_Display(14, " seconds ");
+            Osd_Display(14, " s ");
         } else {
             OSD_c2('0', P12, blue_fill);
             OSD_c2(T_tim + '0', P11, main0); //
 
-            Osd_Display(13, " seconds ");
+            Osd_Display(13, " s ");
         }
         // printf(" TIM :%d \n",(uint8_t)((Tim_Resolution - Tim_Resolution_Start)/10));
 
@@ -18474,39 +18537,32 @@ void handle_j(void)
             A1_yellow = yellowT;
             A2_main0 = main0;
             A3_main0 = main0;
-        } else if (COl_L == 2) {
+        }else if (COl_L == 2) {
             A1_yellow = main0;
             A2_main0 = yellowT;
             A3_main0 = main0;
+        }else if (COl_L == 3) {
+            A1_yellow = main0;
+            A2_main0 = main0;
+            A3_main0 = yellowT;
         }
 
         colour1 = A1_yellow;
         number_stroca = stroca1;
-        // Osd_Display(1, "Contrast");
-        Osd_Display(1, "Saturation");
-        // colour1 = A2_main0;
-        // number_stroca = stroca2;
+        Osd_Display(1, "Contrast");
         // Osd_Display(1, "Saturation");
+
+        colour1 = A2_main0;
+        number_stroca = stroca2;
+        Osd_Display(1, "Saturation");
+
+        colour1 = A3_main0;
+        number_stroca = stroca3;
+        Osd_Display(1, "Default");
     }
 
     void handle_A(void)
     {
-
-
-        // OSD_c1(0x3E, P13, main0);
-        // OSD_c1(0x3E, P14, main0);
-        // OSD_c1(0x3E, P15, main0);
-        // OSD_c1(0x3E, P16, main0);
-        // OSD_c1(0x3E, P17, main0);
-        // OSD_c1(0x3E, P18, main0);
-
-
-        // colour1 = main0;
-        // number_stroca = stroca1;
-        // sequence_number1 = _25;
-        // sequence_number2 = _24;
-        // sequence_number3 = _23;
-        // Typ(Contrast);
 
 
         OSD_c1(0x3E, P13, main0);
@@ -18522,7 +18578,24 @@ void handle_j(void)
         sequence_number1 = _25;
         sequence_number2 = _24;
         sequence_number3 = _23;
+        Typ(Contrast);
+
+
+        OSD_c2(0x3E, P13, main0);
+        OSD_c2(0x3E, P14, main0);
+        OSD_c2(0x3E, P15, main0);
+        OSD_c2(0x3E, P16, main0);
+        OSD_c2(0x3E, P17, main0);
+        OSD_c2(0x3E, P18, main0);
+
+
+        colour1 = main0;
+        number_stroca = stroca2;
+        sequence_number1 = _25;
+        sequence_number2 = _24;
+        sequence_number3 = _23;
         Typ(Saturation);
+
     };
 
 
@@ -18555,17 +18628,17 @@ void handle_j(void)
 
         colour1 = A1_yellow;
         number_stroca = stroca1;
-        // Osd_Display(1, "DoubleLine");
-        Osd_Display(1, "Smooth");
+        Osd_Display(1, "DoubleLine");
+        // Osd_Display(1, "Smooth");
         colour1 = A2_main0;
         number_stroca = stroca2;
-        // Osd_Display(1, "Smooth");
-        Osd_Display(1, "Bright");
+        Osd_Display(1, "Smooth");
+        // Osd_Display(1, "Bright");
 
         colour1 = A3_main0;
         number_stroca = stroca3;
-        // Osd_Display(1, "Bright");
-        Osd_Display(1, "Contrast");
+        Osd_Display(1, "Bright");
+        // Osd_Display(1, "Contrast");
     };
     void handle_at(void)
     {
@@ -18845,38 +18918,38 @@ void handle_j(void)
         OSD_c3(0x3E, P17, main0);
         OSD_c3(0x3E, P18, main0);
 
-        // if (LineOption) {
-        //     OSD_c1(n2, P23, main0);
-        //     OSD_c1(X, P24, main0);
-        // } else {
-        //     OSD_c1(n1, P23, main0);
-        //     OSD_c1(X, P24, main0);
-        //     SmoothOption = false;
-        // }
-        if (SmoothOption) {
-            OSD_c1(O, P23, main0);
-            OSD_c1(N, P24, main0);
-            OSD_c1(F, P25, blue_fill);
+        if (LineOption) {
+            OSD_c1(n2, P23, main0);
+            OSD_c1(X, P24, main0);
         } else {
-            OSD_c1(O, P23, main0);
-            OSD_c1(F, P24, main0);
-            OSD_c1(F, P25, main0);
+            OSD_c1(n1, P23, main0);
+            OSD_c1(X, P24, main0);
+            SmoothOption = false;
         }
-
-        colour1 = main0;
-        number_stroca = stroca2;
-        sequence_number1 = _25;
-        sequence_number2 = _24;
-        sequence_number3 = _23;
-        Typ(Bright);
-
+        if (SmoothOption) {
+            OSD_c2(O, P23, main0);
+            OSD_c2(N, P24, main0);
+            OSD_c2(F, P25, blue_fill);
+        } else {
+            OSD_c2(O, P23, main0);
+            OSD_c2(F, P24, main0);
+            OSD_c2(F, P25, main0);
+        }
 
         colour1 = main0;
         number_stroca = stroca3;
         sequence_number1 = _25;
         sequence_number2 = _24;
         sequence_number3 = _23;
-        Typ(Contrast);
+        Typ(Bright);
+
+
+        // colour1 = main0;
+        // number_stroca = stroca3;
+        // sequence_number1 = _25;
+        // sequence_number2 = _24;
+        // sequence_number3 = _23;
+        // Typ(Contrast);
     };
     void handle_asterisk(void)
     {
