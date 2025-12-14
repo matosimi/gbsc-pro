@@ -5561,6 +5561,37 @@ void runAutoGain()
     }
 }
 
+// Check if scanlines are allowed based on current video signal
+// Scanlines only work with 240p/288p sources, or 480i/576i with Bob deinterlacing
+boolean areScanLinesAllowed()
+{
+    // If in bypass mode, scanlines not allowed
+    if (rto->outModeHdBypass) {
+        return false;
+    }
+
+    // Check if signal is progressive (240p/288p)
+    // videoStandardInput: 1 = NTSC-like (240p/480i), 2 = PAL-like (288p/576i)
+    if (rto->videoStandardInput == 1 || rto->videoStandardInput == 2) {
+        uint16_t VPERIOD_IF = GBS::VPERIOD_IF::read();
+        // Progressive: odd line counts (521, 523, 525 for NTSC or 623, 625, 627 for PAL)
+        // Interlaced: even line counts (522, 524, 526 for NTSC or 622, 624, 626 for PAL)
+        boolean isProgressive = (VPERIOD_IF == 521 || VPERIOD_IF == 523 || VPERIOD_IF == 525 ||
+                                  VPERIOD_IF == 623 || VPERIOD_IF == 625 || VPERIOD_IF == 627);
+
+        if (isProgressive) {
+            return true; // 240p/288p: scanlines allowed
+        } else {
+            // 480i/576i: scanlines only allowed with Bob deinterlacing (deintMode == 1)
+            return (uopt->deintMode == 1);
+        }
+    }
+
+    // For other signal types (unknown, 480p, 576p, 720p, 1080i/p, etc.), scanlines not allowed
+    // Note: videoStandardInput == 0 means signal not yet fully detected/stable
+    return false;
+}
+
 void enableScanlines()
 {
     if (GBS::GBS_OPTION_SCANLINES_ENABLED::read() == 0) {
@@ -6479,11 +6510,14 @@ void runSyncWatcher()
 
                 // scanlines
                 if (uopt->wantScanlines) {
-                    if (!rto->scanlinesEnabled && !rto->motionAdaptiveDeinterlaceActive && !preventScanlines) {
+                    if (!rto->scanlinesEnabled && !rto->motionAdaptiveDeinterlaceActive && !preventScanlines && areScanLinesAllowed()) {
                         enableScanlines();
                     } else if (!uopt->wantScanlines && rto->scanlinesEnabled) {
                         disableScanlines();
                     }
+                } else if (rto->scanlinesEnabled && !areScanLinesAllowed()) {
+                    // Disable scanlines if signal changed to incompatible type
+                    disableScanlines();
                 }
             }
         }
@@ -6963,13 +6997,16 @@ void runSyncWatcher()
             if (rto->videoStandardInput == 14) {
                 // scanlines
                 if (uopt->wantScanlines) {
-                    if (!rto->scanlinesEnabled && !rto->motionAdaptiveDeinterlaceActive) {
+                    if (!rto->scanlinesEnabled && !rto->motionAdaptiveDeinterlaceActive && areScanLinesAllowed()) {
                         if (GBS::IF_LD_RAM_BYPS::read() == 0) { // line doubler on?
                             enableScanlines();
                         }
                     } else if (!uopt->wantScanlines && rto->scanlinesEnabled) {
                         disableScanlines();
                     }
+                } else if (rto->scanlinesEnabled && !areScanLinesAllowed()) {
+                    // Disable scanlines if signal changed to incompatible type
+                    disableScanlines();
                 }
             }
 
@@ -7648,6 +7685,11 @@ void setup()
         }
         setResetParameters();
 
+        // Apply the saved input source configuration to hardware
+        // This must be called after prepareSyncProcessor() and calibrateAdcOffset()
+        // which set default/temporary values for ADC_INPUT_SEL, ADC_SOGEN, and SP_EXT_SYNC_SEL
+        applySavedInputSource();
+
         delay(4); // help wifi (presets are unloaded now)
         handleWiFi(1);
         delay(4);
@@ -7857,6 +7899,7 @@ void updateWebSocketData()
             // send ping and stats
             if (ESP.getFreeHeap() > 6000) {
                 webSocket.broadcastTXT(toSend, MESSAGE_LEN);
+                webSocket.broadcastTXT(proStatusPacket(), PRO_STATUS_MESSAGE_LEN);
             }
         }
     }
@@ -7905,6 +7948,34 @@ void loop()
     
     OSD_selectOption();
     OSD_IR();
+
+    // Refresh menus when video signal properties change
+    static uint8_t prevVideoStandardInput = 0;
+    static uint16_t prevVPERIOD_IF = 0;
+    static boolean prevOutModeHdBypass = false;
+    static uint8_t prevDeintMode = 0;
+
+    uint16_t currentVPERIOD_IF = GBS::VPERIOD_IF::read();
+    boolean signalChanged = (rto->videoStandardInput != prevVideoStandardInput ||
+                             currentVPERIOD_IF != prevVPERIOD_IF ||
+                             rto->outModeHdBypass != prevOutModeHdBypass ||
+                             uopt->deintMode != prevDeintMode);
+
+    if (signalChanged) {
+        prevVideoStandardInput = rto->videoStandardInput;
+        prevVPERIOD_IF = currentVPERIOD_IF;
+        prevOutModeHdBypass = rto->outModeHdBypass;
+        prevDeintMode = uopt->deintMode;
+        // Refresh OLED display
+        extern uint8_t oledClearFlag;
+        oledClearFlag = ~0;
+        // Refresh OSD TV display
+        extern char lastOsdCommand;
+        extern void OSD_menu_F(char incomingByte);
+        if (lastOsdCommand != 0) {
+            OSD_menu_F(lastOsdCommand);
+        }
+    }
 
 #if HAVE_BUTTONS
     static unsigned long lastButton = micros();
@@ -10176,6 +10247,130 @@ void startWebserver()
 
         fail:
         request->send(200, "application/json", result ? "true" : "false");
+    });
+
+    server.on("/pro", HTTP_POST, [](AsyncWebServerRequest *request) {
+        // Handle input source selection (i parameter)
+        if (request->hasArg("i")) {
+            uint8_t i = request->arg("i").toInt();
+
+            switch (i) {
+                case 1:
+                    InputRGBs();
+                    request->send(200, "application/json", "true");
+                    break;
+                case 2:
+                    InputRGsB();
+                    request->send(200, "application/json", "true");
+                    break;
+                case 3:
+                    InputVGA();
+                    request->send(200, "application/json", "true");
+                    break;
+                case 4:
+                    InputYUV();
+                    request->send(200, "application/json", "true");
+                    break;
+                case 5:
+                    InputSV();
+                    request->send(200, "application/json", "true");
+                    break;
+                case 6:
+                    InputAV();
+                    request->send(200, "application/json", "true");
+                    break;
+                default:
+                    request->send(400, "application/json", "false");
+                    break;
+            }
+            return;
+        }
+
+        // Handle video format selection (f parameter)
+        // 0=Auto, 1=PAL, 2=NTSC-M, 3=PAL-60, 4=NTSC443, 5=NTSC-J,
+        // 6=PAL-N w/ p, 7=PAL-M w/o p, 8=PAL-M, 9=PAL Cmb -N, 10=PAL Cmb -N w/ p, 11=SECAM
+        if (request->hasArg("f")) {
+            uint8_t f = request->arg("f").toInt();
+
+            if (f <= 11) {
+                // Format selection only applies to composite/s-video inputs
+                if (Info == InfoAV || Info == InfoSV) {
+                    uopt->TVMODE_presetPreference = (TVMODE_PresetPreference)f;
+
+                    // Call the same functions as the OSD menu handler
+                    if (Info == InfoAV) {
+                        ChangeAVModeOption(f);
+                    } else if (Info == InfoSV) {
+                        ChangeSVModeOption(f);
+                    }
+
+                    // Send the TvMode command
+                    Send_TvMode(modes[f]);
+
+                    const char* formatNames[] = {"Auto", "PAL", "NTSC-M", "PAL-60", "NTSC443", "NTSC-J", "PAL-N w/ p", "PAL-M w/o p", "PAL-M", "PAL Cmb -N", "PAL Cmb -N w/ p", "SECAM"};
+                    SerialM.print(F("Video format: "));
+                    SerialM.println(formatNames[f]);
+
+                    request->send(200, "application/json", "true");
+                } else {
+                    // Format not applicable for current input type
+                    request->send(400, "application/json", "false");
+                }
+            } else {
+                request->send(400, "application/json", "false");
+            }
+            return;
+        }
+
+        // Handle 2X toggle (x parameter)
+        // 0=1X (off), 1=2X (on)
+        if (request->hasArg("x")) {
+            uint8_t x = request->arg("x").toInt();
+
+            if (x <= 1) {
+                lineOption = x;
+                Send_Line(lineOption); // Send command immediately like OSD menu
+                SerialM.println(lineOption ? F("2X enabled") : F("2X disabled"));
+
+                // If 2X is disabled, also disable Smooth (smooth only works with 2X)
+                if (!lineOption && smoothOption) {
+                    smoothOption = 0;
+                    Send_Smooth(smoothOption);
+                    SerialM.println(F("Smooth disabled (requires 2X)"));
+                }
+
+                request->send(200, "application/json", "true");
+            } else {
+                request->send(400, "application/json", "false");
+            }
+            return;
+        }
+
+        // Handle Smooth toggle (s parameter)
+        // 0=off, 1=on
+        // Note: Smooth only works when 2X is enabled
+        if (request->hasArg("s")) {
+            uint8_t s = request->arg("s").toInt();
+
+            if (s <= 1) {
+                // Force smooth off if 2X is not enabled
+                if (!lineOption && s == 1) {
+                    smoothOption = 0;
+                    SerialM.println(F("Smooth not enabled (requires 2X)"));
+                } else {
+                    smoothOption = s;
+                    SerialM.println(smoothOption ? F("Smooth enabled") : F("Smooth disabled"));
+                }
+                Send_Smooth(smoothOption); // Send command immediately like OSD menu
+                request->send(200, "application/json", "true");
+            } else {
+                request->send(400, "application/json", "false");
+            }
+            return;
+        }
+
+        // No valid parameter provided
+        request->send(400, "application/json", "false");
     });
 
     //webSocket.onEvent(webSocketEvent);

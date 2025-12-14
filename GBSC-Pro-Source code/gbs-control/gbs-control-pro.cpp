@@ -55,6 +55,7 @@ extern void saveRGBPatternPreset(byte slot, byte colorMode);
 extern void writeOneByte(uint8_t slaveRegister, uint8_t value);
 extern void disableMotionAdaptDeinterlace();
 extern void disableScanlines();
+extern boolean areScanLinesAllowed();
 extern float getOutputFrameRate();
 extern void writeProgramArrayNew(const uint8_t *programArray, boolean skipMDSection);
 extern void doPostPresetLoadSteps();
@@ -100,6 +101,7 @@ int oled_menuItem = OSD_None;
 int lastOledMenuItem = 0;
 uint8_t oledClearFlag = 0;
 boolean NEW_OLED_MENU = false;
+char lastOsdCommand = 0; // Track last OSD TV command for refresh
 
 uint8_t SVModeOption = 0;
 uint8_t AVModeOption = 0;
@@ -223,6 +225,7 @@ void UpDisplay(void)
         }
     }
 }
+
 void Mode_Option(void)
 {
     // Parameter validation with debugging information
@@ -255,6 +258,7 @@ void Mode_Option(void)
         Send_Smooth(smoothOption);
     }
 }
+
 boolean CheckInputFrequency()
 {
     unsigned char freq = 0;
@@ -270,20 +274,77 @@ boolean CheckInputFrequency()
     freq_last = freq;
     return 1;
 }
+
 void OSD_DISPLAY(const int T, const char C)
 {
     __(T, (C * 2) + 1);
 }
+
 void ChangeSVModeOption(uint8_t num)
 {
     SVModeOption = num;
     saveUserPrefs();
 }
+
 void ChangeAVModeOption(uint8_t num)
 {
     AVModeOption = num;
     saveUserPrefs();
 }
+
+const size_t PRO_STATUS_MESSAGE_LEN = 6;
+
+const char* proStatusPacket()
+{
+    static char buffer[PRO_STATUS_MESSAGE_LEN];
+    buffer[0] = '$';
+
+    uint8_t inputType = 1;
+    if (selectedInputSource == S_RGBs) {
+        inputType = (Info == InfoRGsB) ? 2 : 1;
+    }
+    else if (selectedInputSource == S_VGA) {
+        inputType = 3;
+    }
+    else if (selectedInputSource == S_YUV) {
+        if (Info == InfoYUV) inputType = 4;
+        else if (Info == InfoSV) inputType = 5;
+        else if (Info == InfoAV) inputType = 6;
+    }
+
+    buffer[1] = '0' + inputType;
+
+    // Format: 0-9 = '0'-'9', 10 = 'A', 11 = 'B'
+    uint8_t format = (uint8_t)uopt->TVMODE_presetPreference;
+    if (format > 11) {
+        format = 0; // Default to Auto if out of range
+    }
+    if (format <= 9) {
+        buffer[2] = '0' + format;
+    } else if (format == 10) {
+        buffer[2] = 'A';
+    } else {
+        buffer[2] = 'B';
+    }
+
+    // 2X: '0' or '1' (ensure valid range)
+    buffer[3] = '0' + (lineOption ? 1 : 0);
+
+    // Smooth: '0' or '1' (ensure valid range)
+    buffer[4] = '0' + (smoothOption ? 1 : 0);
+
+    // Sharpness: '0' or '1' (checks for override register state)
+    buffer[5] = isPeakingLocked() ? '1' : '0';
+
+    return buffer;
+}
+
+// Helper to check if Peaking is locked by Sharpness
+bool isPeakingLocked(void) {
+    // Sharpness 'Medium' or 'High' sets gain != 0x16
+    return (GBS::VDS_PK_LB_GAIN::read() != 0x16);
+}
+
 void Osd_Display(uint8_t start, const char str[])
 {
     static uint8_t start_last = 0;
@@ -316,6 +377,7 @@ void Osd_Display(uint8_t start, const char str[])
             OSD_DISPLAY(str[count], count + start);
     }
 }
+
 void OSD_writeString(int startPos, int row, const char *str)
 {
     int pos = startPos;
@@ -349,7 +411,8 @@ void OSD_writeString(int startPos, int row, const char *str)
         str++;
     }
 }
-void OSD_selectOption()
+
+void OSD_selectOption(void)
 {
     if (oled_menuItem == OSD_None) {
         NEW_OLED_MENU = true;
@@ -1283,7 +1346,7 @@ void OSD_selectOption()
                     if (GBS::IF_HBIN_SP::read() >= 10) {
                     } else {
                         for (int p = 0; p <= 400; p++) {
-                            colour1 = 0x14;
+                            colour1 = red;
                             number_stroca = stroca1;
                             __(l, _20);
                             __(i, _21);
@@ -1308,7 +1371,7 @@ void OSD_selectOption()
                     if (GBS::IF_HBIN_SP::read() < 0x150) {
                     } else {
                         for (int p = 0; p <= 400; p++) {
-                            colour1 = 0x14;
+                            colour1 = red;
                             number_stroca = stroca1;
                             __(l, _20);
                             __(i, _21);
@@ -1380,7 +1443,7 @@ void OSD_selectOption()
                     serialCommand = 'h';
                     if (GBS::VDS_HSCALE::read() == 1023) {
                         for (int p = 0; p <= 400; p++) {
-                            colour1 = 0x14;
+                            colour1 = red;
                             number_stroca = stroca2;
                             Osd_Display(20, "limit");
                             __(0x0d, _25);
@@ -1396,7 +1459,7 @@ void OSD_selectOption()
                     serialCommand = 'z';
                     if (GBS::VDS_HSCALE::read() <= 256) {
                         for (int p = 0; p <= 400; p++) {
-                            colour1 = 0x14;
+                            colour1 = red;
                             number_stroca = stroca2;
                             Osd_Display(20, "limit");
                             __(0x0d, _25);
@@ -1412,7 +1475,7 @@ void OSD_selectOption()
                     serialCommand = '5';
                     if (GBS::VDS_VSCALE::read() == 1023) {
                         for (int p = 0; p <= 400; p++) {
-                            colour1 = 0x14;
+                            colour1 = red;
                             number_stroca = stroca2;
                             Osd_Display(20, "limit");
                             __(0x0d, _25);
@@ -1428,7 +1491,7 @@ void OSD_selectOption()
                     serialCommand = '4';
                     if (GBS::VDS_VSCALE::read() <= 256) {
                         for (int p = 0; p <= 400; p++) {
-                            colour1 = 0x14;
+                            colour1 = red;
                             number_stroca = stroca2;
                             Osd_Display(20, "limit");
                             __(0x0d, _25);
@@ -1483,7 +1546,7 @@ void OSD_selectOption()
                     if ((GBS::VDS_DIS_HB_ST::read() > 4) && (GBS::VDS_DIS_HB_SP::read() < (GBS::VDS_HSYNC_RST::read() - 4))) {
                     } else {
                         for (int p = 0; p <= 400; p++) {
-                            colour1 = 0x14;
+                            colour1 = red;
                             number_stroca = stroca3;
                             Osd_Display(20, "limit");
                             __(0x0d, _25);
@@ -1500,7 +1563,7 @@ void OSD_selectOption()
                     if ((GBS::VDS_DIS_HB_ST::read() < (GBS::VDS_HSYNC_RST::read() - 4)) && (GBS::VDS_DIS_HB_SP::read() > 4)) {
                     } else {
                         for (int p = 0; p <= 400; p++) {
-                            colour1 = 0x14;
+                            colour1 = red;
                             number_stroca = stroca3;
                             Osd_Display(20, "limit");
                             __(0x0d, _25);
@@ -1517,7 +1580,7 @@ void OSD_selectOption()
                     if ((GBS::VDS_DIS_VB_ST::read() > 6) && (GBS::VDS_DIS_VB_SP::read() < (GBS::VDS_VSYNC_RST::read() - 4))) {
                     } else {
                         for (int p = 0; p <= 400; p++) {
-                            colour1 = 0x14;
+                            colour1 = red;
                             number_stroca = stroca3;
                             Osd_Display(20, "limit");
                             __(0x0d, _25);
@@ -1534,7 +1597,7 @@ void OSD_selectOption()
                     if ((GBS::VDS_DIS_VB_ST::read() < (GBS::VDS_VSYNC_RST::read() - 4)) && (GBS::VDS_DIS_VB_SP::read() > 6)) {
                     } else {
                         for (int p = 0; p <= 400; p++) {
-                            colour1 = 0x14;
+                            colour1 = red;
                             number_stroca = stroca3;
                             Osd_Display(20, "limit");
                             __(0x0d, _25);
@@ -1631,7 +1694,11 @@ void OSD_selectOption()
         display.setFont(ArialMT_Plain_16);
         display.drawString(1, 0, "Menu->Color");
         display.drawString(1, 22, "Scanlines");
-        // uopt->scanlineStrength
+
+        // Check if scanlines are allowed for current signal
+        boolean scanlinesAllowed = areScanLinesAllowed();
+
+        // Always show ON/OFF, the OSD TV menu will show it grayed out if disabled
         if (uopt->wantScanlines) {
             display.drawString(1, 44, "ON");
         } else {
@@ -1666,13 +1733,22 @@ void OSD_selectOption()
                     oled_menuItem = OSD_ColorSettings_Saturation;
                     break;
                 case IRKeyRight:
-                    userCommand = 'K';
+                    // Only allow changing scanlines if they're supported
+                    if (scanlinesAllowed) {
+                        userCommand = 'K';
+                    }
                     break;
                 case IRKeyLeft:
-                    userCommand = 'K';
+                    // Only allow changing scanlines if they're supported
+                    if (scanlinesAllowed) {
+                        userCommand = 'K';
+                    }
                     break;
                 case IRKeyOk:
-                    userCommand = '7';
+                    // Only allow toggling scanlines if they're supported
+                    if (scanlinesAllowed) {
+                        userCommand = '7';
+                    }
                     break;
                 case IRKeyExit:
                     OSD_menu_F(OSD_CROSS_TOP);
@@ -1814,10 +1890,15 @@ void OSD_selectOption()
         display.setFont(ArialMT_Plain_16);
         display.drawString(1, 0, "Menu->Color");
         display.drawString(1, 22, "Peaking");
-        if (uopt->wantPeaking) {
-            display.drawString(1, 44, "ON");
+
+        if (isPeakingLocked()) {
+             display.drawString(1, 44, "LOCKED");
         } else {
-            display.drawString(1, 44, "OFF");
+            if (uopt->wantPeaking) {
+                display.drawString(1, 44, "ON");
+            } else {
+                display.drawString(1, 44, "OFF");
+            }
         }
         display.display();
 
@@ -1848,11 +1929,10 @@ void OSD_selectOption()
                     oled_menuItem = OSD_ColorSettings_Advanced;
                     break;
                 case IRKeyOk:
-                    serialCommand = 'f';
+                    if (!isPeakingLocked()) {
+                        serialCommand = 'f';
+                    }
                     break;
-                // case IRKeyLeft:
-                //   serialCommand = 'f';
-                //   break;
                 case IRKeyExit:
                     OSD_menu_F(OSD_CROSS_TOP);
                     OSD_menu_F('1');
@@ -6690,6 +6770,11 @@ void OSD_selectOption()
     lastOledMenuItem = oled_menuItem;
 }
 
+static bool isMainMenuCommand(char cmd) {
+    static const char mainMenuCommands[] = "abcdikmowz@#^";
+    return strchr(mainMenuCommands, cmd) != nullptr;
+}
+
 void OSD_menu_F(char incomingByte)
 {
     const size_t tableSize = sizeof(menuTable) / sizeof(menuTable[0]);
@@ -6698,6 +6783,10 @@ void OSD_menu_F(char incomingByte)
     // 线性查找实�?
     for (size_t i = 0; i < tableSize; i++) {
         if (menuTable[i].key == key) {
+            // Save only main menu commands that calculate colors, not update commands
+            if (isMainMenuCommand(key)) {
+                lastOsdCommand = incomingByte;
+            }
             menuTable[i].handler();
             return;
         }
@@ -6854,7 +6943,6 @@ void OSD_IR()
         delay(5);
     }
 }
-
 
 void handle_0(void)
 {
@@ -7158,15 +7246,30 @@ void handle_a(void)
 {
     if (selectedMenuLine == 1) {
         A1_yellow = yellowT;
-        A2_main0 = main0;
+        // Check if scanlines are allowed for line 2
+        if (!areScanLinesAllowed()) {
+            A2_main0 = red;  // Disabled color
+        } else {
+            A2_main0 = main0;
+        }
         A3_main0 = main0;
     } else if (selectedMenuLine == 2) {
         A1_yellow = main0;
-        A2_main0 = yellowT;
+        // Check if scanlines are allowed when selected
+        if (!areScanLinesAllowed()) {
+            A2_main0 = red;  // Disabled color
+        } else {
+            A2_main0 = yellowT;
+        }
         A3_main0 = main0;
     } else if (selectedMenuLine == 3) {
         A1_yellow = main0;
-        A2_main0 = main0;
+        // Check if scanlines are allowed for line 2
+        if (!areScanLinesAllowed()) {
+            A2_main0 = red;  // Disabled color
+        } else {
+            A2_main0 = main0;
+        }
         A3_main0 = yellowT;
     }
 
@@ -7305,17 +7408,52 @@ void handle_e(void)
     OSD_c1(0x3E, P18, main0);
     OSD_c1(0x3E, P22, main0);
 
-    OSD_c2(0x3E, P10, main0);
-    OSD_c2(0x3E, P11, main0);
-    OSD_c2(0x3E, P12, main0);
-    OSD_c2(0x3E, P13, main0);
-    OSD_c2(0x3E, P14, main0);
-    OSD_c2(0x3E, P15, main0);
-    OSD_c2(0x3E, P16, main0);
-    OSD_c2(0x3E, P17, main0);
-    OSD_c2(0x3E, P18, main0);
-    OSD_c2(0x3E, P19, main0);
-    OSD_c2(0x3E, P22, main0);
+    // Only show dashes for scanlines if they are available
+    if (areScanLinesAllowed()) {
+        OSD_c2(0x3E, P10, main0);
+        OSD_c2(0x3E, P11, main0);
+        OSD_c2(0x3E, P12, main0);
+        OSD_c2(0x3E, P13, main0);
+        OSD_c2(0x3E, P14, main0);
+        OSD_c2(0x3E, P15, main0);
+        OSD_c2(0x3E, P16, main0);
+        OSD_c2(0x3E, P17, main0);
+        OSD_c2(0x3E, P18, main0);
+        OSD_c2(0x3E, P19, main0);
+        OSD_c2(0x3E, P22, main0);
+
+        if (uopt->wantScanlines) {
+            OSD_c2(O, P23, main0);
+            OSD_c2(N, P24, main0);
+            OSD_c2(F, P25, blue_fill);
+        } else {
+            OSD_c2(O, P23, main0);
+            OSD_c2(F, P24, main0);
+            OSD_c2(F, P25, main0);
+        }
+
+        osdDisplayValue = uopt->scanlineStrength;
+        if (osdDisplayValue == 0x00) {
+            OSD_c2(n0, P21, main0);
+            OSD_c2(n0, P20, main0);
+        } else if (osdDisplayValue == 0x10) {
+            OSD_c2(n0, P21, main0);
+            OSD_c2(n1, P20, main0);
+        } else if (osdDisplayValue == 0x20) {
+            OSD_c2(n0, P21, main0);
+            OSD_c2(n2, P20, main0);
+        } else if (osdDisplayValue == 0x30) {
+            OSD_c2(n0, P21, main0);
+            OSD_c2(n3, P20, main0);
+        } else if (osdDisplayValue == 0x40) {
+            OSD_c2(n0, P21, main0);
+            OSD_c2(n4, P20, main0);
+        } else if (osdDisplayValue == 0x50) {
+            OSD_c2(n0, P21, main0);
+            OSD_c2(n5, P20, main0);
+        }
+    }
+
     OSD_c3(0x3E, P12, main0);
     OSD_c3(0x3E, P13, main0);
     OSD_c3(0x3E, P14, main0);
@@ -7328,16 +7466,6 @@ void handle_e(void)
     OSD_c3(0x3E, P21, main0);
     OSD_c3(0x3E, P22, main0);
 
-    if (uopt->wantScanlines) {
-        OSD_c2(O, P23, main0);
-        OSD_c2(N, P24, main0);
-        OSD_c2(F, P25, blue_fill);
-    } else {
-        OSD_c2(O, P23, main0);
-        OSD_c2(F, P24, main0);
-        OSD_c2(F, P25, main0);
-    }
-
     if (uopt->wantVdsLineFilter) {
         OSD_c3(O, P23, main0);
         OSD_c3(N, P24, main0);
@@ -7349,27 +7477,6 @@ void handle_e(void)
     }
     osdDisplayValue = GBS::ADC_RGCTRL::read();
     Type4(osdDisplayValue);
-
-    osdDisplayValue = uopt->scanlineStrength;
-    if (osdDisplayValue == 0x00) {
-        OSD_c2(n0, P21, main0);
-        OSD_c2(n0, P20, main0);
-    } else if (osdDisplayValue == 0x10) {
-        OSD_c2(n0, P21, main0);
-        OSD_c2(n1, P20, main0);
-    } else if (osdDisplayValue == 0x20) {
-        OSD_c2(n0, P21, main0);
-        OSD_c2(n2, P20, main0);
-    } else if (osdDisplayValue == 0x30) {
-        OSD_c2(n0, P21, main0);
-        OSD_c2(n3, P20, main0);
-    } else if (osdDisplayValue == 0x40) {
-        OSD_c2(n0, P21, main0);
-        OSD_c2(n4, P20, main0);
-    } else if (osdDisplayValue == 0x50) {
-        OSD_c2(n0, P21, main0);
-        OSD_c2(n5, P20, main0);
-    }
 
     if (uopt->enableAutoGain == 0) {
         OSD_c1(O, P23, main0);
@@ -7408,9 +7515,11 @@ void handle_f(void)
     OSD_c2(0x3E, P17, main0);
     OSD_c2(0x3E, P18, main0);
     OSD_c2(0x3E, P19, main0);
-    OSD_c2(0x3E, P20, main0);
-    OSD_c2(0x3E, P21, main0);
-    OSD_c2(0x3E, P22, main0);
+    if (!isPeakingLocked()) {
+        OSD_c2(0x3E, P20, main0);
+        OSD_c2(0x3E, P21, main0);
+        OSD_c2(0x3E, P22, main0);
+    }
     OSD_c3(0x3E, P14, main0);
     OSD_c3(0x3E, P15, main0);
     OSD_c3(0x3E, P16, main0);
@@ -7431,14 +7540,24 @@ void handle_f(void)
         OSD_c1(F, P25, blue_fill);
     }
 
-    if (uopt->wantPeaking == 0) {
-        OSD_c2(O, P23, main0);
-        OSD_c2(F, P24, main0);
-        OSD_c2(F, P25, main0);
+    if (isPeakingLocked()) {
+        // Locked state - overwrite dashes and ON/OFF with LOCKED
+        OSD_c2(L, P20, main0);
+        OSD_c2(O, P21, main0);
+        OSD_c2(C, P22, main0);
+        OSD_c2(K, P23, main0);
+        OSD_c2(E, P24, main0);
+        OSD_c2(D, P25, main0);
     } else {
-        OSD_c2(O, P23, main0);
-        OSD_c2(N, P24, main0);
-        OSD_c2(F, P25, blue_fill);
+        if (uopt->wantPeaking == 0) {
+            OSD_c2(O, P23, main0);
+            OSD_c2(F, P24, main0);
+            OSD_c2(F, P25, main0);
+        } else {
+            OSD_c2(O, P23, main0);
+            OSD_c2(N, P24, main0);
+            OSD_c2(F, P25, blue_fill);
+        }
     }
 
     if (uopt->wantStepResponse) {
@@ -7609,7 +7728,7 @@ void handle_i(void)
 {
     if (selectedMenuLine == 1) {
         if ((Info != InfoSV) && (Info != InfoAV)) {
-            A1_yellow = 0X14;
+            A1_yellow = red;  // Disabled color
         } else {
             A1_yellow = yellowT;
         }
@@ -8647,7 +8766,7 @@ void handle_caret(void)
     } else if (selectedMenuLine == 2) {
         A1_yellow = main0;
         if (!lineOption)
-            A2_main0 = 0x14;
+            A2_main0 = red;  // Disabled color
         else
             A2_main0 = yellowT;
         A3_main0 = main0;
