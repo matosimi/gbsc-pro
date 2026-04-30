@@ -1274,21 +1274,6 @@ void setAndUpdateSogLevel(uint8_t level)
 // Function should not further nest, so it can be called in syncwatcher
 void goLowPowerWithInputDetection()
 {
-    if (uopt->keepOutputOnNoSignal) {
-        // Keep DAC and sync output active so the TV stays locked and the OSD remains usable.
-        // Engage / re-engage no-signal black screen mode (covers both boot and runtime sync loss).
-        if (!rto->noSignalBlackScreenMode) {
-            rto->noSignalBlackScreenMode = true;
-            SerialM.println(F("Sync lost: engaging black screen output"));
-        } else {
-            SerialM.println(F("No signal: maintaining black screen output, scanning inputs..."));
-        }
-        prepareSyncProcessor();
-        rto->isInLowPowerMode = true;
-        LEDOFF;
-        return;
-    }
-
     GBS::OUT_SYNC_CNTRL::write(0); // no H / V sync out to PAD
     GBS::DAC_RGBS_PWDNZ::write(0); // direct disableDAC()
     //zeroAll();
@@ -1745,7 +1730,6 @@ uint8_t inputAndSyncDetect()
         }
         return 0;
     } else if (syncFound == 1 && isInfoDisplayActive == 0) { // input is RGBS
-        rto->noSignalBlackScreenMode = false; // real signal found, exit black screen mode
         rto->inputIsYpBpR = 0;
         rto->sourceDisconnected = false;
         rto->isInLowPowerMode = false;
@@ -1754,7 +1738,6 @@ uint8_t inputAndSyncDetect()
         LEDON;
         return 1;
     } else if (syncFound == 2 && isInfoDisplayActive == 0) {
-        rto->noSignalBlackScreenMode = false; // real signal found, exit black screen mode
         rto->inputIsYpBpR = 1;
         rto->sourceDisconnected = false;
         rto->isInLowPowerMode = false;
@@ -1763,7 +1746,6 @@ uint8_t inputAndSyncDetect()
         LEDON;
         return 2;
     } else if (syncFound == 3 && isInfoDisplayActive == 0) { // input is RGBHV
-        rto->noSignalBlackScreenMode = false; // real signal found, exit black screen mode
         //already applied
         rto->isInLowPowerMode = false;
         rto->inputIsYpBpR = 0;
@@ -3500,9 +3482,7 @@ void doPostPresetLoadSteps()
     rto->scanlinesEnabled = false;
     rto->failRetryAttempts = 0;
     rto->videoIsFrozen = true;       // ensures unfreeze
-    if (!rto->noSignalBlackScreenMode) {
-        rto->sourceDisconnected = false; // this must be true if we reached here (no syncwatcher operation)
-    }
+    rto->sourceDisconnected = false; // this must be true if we reached here (no syncwatcher operation)
     rto->boardHasPower = true;       //same
 
     if (rto->presetID == 0x06 || rto->presetID == 0x16) {
@@ -4079,7 +4059,7 @@ void doPostPresetLoadSteps()
         rto->videoStandardInput = 14;
     }
 
-    if (GBS::GBS_OPTION_SCALING_RGBHV::read() == 0 && !rto->noSignalBlackScreenMode) {
+    if (GBS::GBS_OPTION_SCALING_RGBHV::read() == 0) {
         unsigned long timeout = millis();
         while ((!getStatus16SpHsStable()) && (millis() - timeout < 2002)) {
             delay(4);
@@ -4535,15 +4515,6 @@ void applyPresets(uint8_t result)
     if (!rto->boardHasPower) {
         SerialM.println(F("GBS board not responding!"));
         return;
-    }
-
-    // When a real input is detected and processed, persist its video standard so the
-    // device can output a stable black screen on the next boot if no signal is present.
-    if (result > 0 && result <= 9 && !rto->noSignalBlackScreenMode) {
-        if (uopt->lastVideoStandard != result) {
-            uopt->lastVideoStandard = result;
-            saveUserPrefs();
-        }
     }
 
     // if RGBHV scaling and invoked through web ui or custom preset
@@ -7456,9 +7427,7 @@ void runSyncWatcher()
     if (rto->noSyncCounter >= 0x07fe) {
         // couldn't recover, source is lost
         // restore initial conditions and move to input detect
-        if (!uopt->keepOutputOnNoSignal) {
-            GBS::DAC_RGBS_PWDNZ::write(0); // 0 = disable DAC (skipped when Keep Output is on)
-        }
+        GBS::DAC_RGBS_PWDNZ::write(0); // 0 = disable DAC
         rto->noSyncCounter = 0;
         SerialM.println();
         goLowPowerWithInputDetection(); // does not further nest, so it can be called here // sets reset parameters
@@ -7694,9 +7663,6 @@ void loadDefaultUserOptions()
     uopt->advFilterCombPAL = ADV_FILTER_COMB_PAL_DEFAULT;
     // HDMI Limited Range
     uopt->hdmiLimitedRange = 1;
-    // No-signal black screen output
-    uopt->keepOutputOnNoSignal = 0;
-    uopt->lastVideoStandard = 0;
     // Developer menu tweaks defaults (all "no override")
     uopt->devHTotal = 0;
     uopt->devPllDiv = 0;
@@ -7936,7 +7902,6 @@ void setup()
     rto->continousStableCounter = 0;
     rto->currentLevelSOG = 5;
     rto->thisSourceMaxLevelSOG = 31; // 31 = auto sog has not (yet) run
-    rto->noSignalBlackScreenMode = false;
 
     adco->r_gain = 0;
     adco->g_gain = 0;
@@ -8170,12 +8135,6 @@ void setup()
             uopt->advHue = (uint8_t)((f.read() - '0') * 100 + (f.read() - '0') * 10 + (f.read() - '0'));
             if (uopt->advHue > 254) uopt->advHue = 128;
 
-            // No-signal black screen output
-            uopt->lastVideoStandard = (uint8_t)(f.read() - '0');
-            if (uopt->lastVideoStandard > 9) uopt->lastVideoStandard = 0;
-            uopt->keepOutputOnNoSignal = (uint8_t)(f.read() - '0');
-            if (uopt->keepOutputOnNoSignal > 1) uopt->keepOutputOnNoSignal = 0;
-
             f.close();
         }
     }
@@ -8286,19 +8245,6 @@ void setup()
         // Load slot settings into memory (ADV, GBS colors, etc.)
         // These will be applied by doPostPresetLoadSteps() when syncWatcher calls applyPresets()
         loadSlotSettings();
-
-        // Keep Output (no-signal black screen): if enabled, output a stable signal so the TV stays
-        // locked and the OSD is accessible via the remote. Replicate the last known video standard;
-        // if none has been detected yet, fall back to the user's saved presetPreference as-is
-        // (avoids forcing a resolution the TV may not support).
-        if (uopt->keepOutputOnNoSignal && uopt->presetPreference != OutputBypass) {
-            rto->noSignalBlackScreenMode = true;
-            uint8_t noSignalStandard = (uopt->lastVideoStandard > 0) ? uopt->lastVideoStandard : 1;
-            rto->videoStandardInput = noSignalStandard; // lets menu handlers use correct standard
-            SerialM.println(F("No input signal: enabling black screen output"));
-            applyPresets(noSignalStandard);
-            // sourceDisconnected remains true; input polling loop will keep scanning
-        }
 
         delay(4); // help wifi (presets are unloaded now)
         handleWiFi(1);
@@ -8504,9 +8450,6 @@ void updateWebSocketData()
             }
             if (uopt->disableExternalClockGenerator) {
                 toSend[5] |= (1 << 2);
-            }
-            if (uopt->keepOutputOnNoSignal) {
-                toSend[5] |= (1 << 3);
             }
 
             // send ping and stats
@@ -10199,13 +10142,6 @@ void handleType2Command(char argument)
             }
             saveUserPrefs();
             break;
-        case '|':
-            // Keep Output (no-signal black screen) toggle
-            uopt->keepOutputOnNoSignal = !uopt->keepOutputOnNoSignal;
-            SerialM.print(F("Keep Output on No Signal: "));
-            SerialM.println(uopt->keepOutputOnNoSignal ? "on" : "off");
-            saveUserPrefs();
-            break;
         case '%':
             // HDMI Limited Range: cycle 0=Off, 1=HD, 2=SD, 3=All
             uopt->hdmiLimitedRange = (uopt->hdmiLimitedRange + 1) % 4;
@@ -11620,9 +11556,6 @@ void saveUserPrefs()
     f.write(uopt->advHue / 100 + '0');
     f.write((uopt->advHue / 10) % 10 + '0');
     f.write(uopt->advHue % 10 + '0');
-    // No-signal black screen output
-    f.write(uopt->lastVideoStandard + '0');
-    f.write(uopt->keepOutputOnNoSignal + '0');
     f.close();
 }
 

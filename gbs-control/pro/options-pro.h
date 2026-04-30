@@ -110,9 +110,6 @@ enum TVMODE_PresetPreference : uint8_t {
     uint8_t advCombChromaTapsPAL;   /* PAL Chroma Taps (0-3, default 3=5→4 lines) */ \
     /* HDMI Limited Range */ \
     uint8_t hdmiLimitedRange;       /* Force Limited Range output (0=Off, 1=HD, 2=SD, 3=All) */ \
-    /* No-signal Black Screen Output */ \
-    uint8_t keepOutputOnNoSignal;   /* Keep HDMI output active (black screen) when no input (0=Off, 1=On) */ \
-    uint8_t lastVideoStandard;      /* Last successfully detected video standard (0=none, 1-9) */ \
     /* Developer menu persistent tweaks (0 / 0xFF = no override, use preset default) */ \
     uint16_t devHTotal;             /* VDS_HSYNC_RST custom (0 = no override) */ \
     uint16_t devPllDiv;             /* PLLAD_MD custom (0 = no override) */ \
