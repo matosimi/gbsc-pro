@@ -63,24 +63,38 @@ const Structs: StructDescriptors = {
     { name: "hdmiLimitedRange", type: "byte", size: 1 },    // 0=Off, 1=HD, 2=SD, 3=All
     // --- PRO: ADV7280 Hue (added in v2.3.0) ---
     { name: "advHue", type: "byte", size: 1 },              // 0-255 (default 128 = 0°)
-    // --- PRO: Developer menu per-slot tweaks (added in v2.4.0, 0/0xFF = no override) ---
-    { name: "devHTotal", type: "uint16le", size: 2 },       // VDS_HSYNC_RST (uint16, 0 = no override)
-    { name: "devPllDiv", type: "uint16le", size: 2 },       // PLLAD_MD (uint16, 0 = no override)
-    { name: "devSdramClock", type: "byte", size: 1 },       // PLL_MS (0xFF = no override)
-    { name: "devAdcFilter", type: "byte", size: 1 },        // ADC_FLTR (0xFF = no override)
-    { name: "devOsr", type: "byte", size: 1 },              // OSR (0xFF = no override)
-    { name: "devSogLevel", type: "byte", size: 1 },         // ADC_SOGCTRL (0xFF = no override)
-    { name: "devSyncInvert", type: "byte", size: 1 },       // bit0=HS, bit1=VS (0 = no override)
-    // --- PRO: Screen Move/Scale per-slot tweaks (added in v2.4.0) ---
-    { name: "screenHMove", type: "uint16le", size: 2 },     // IF_HBIN_SP (uint16, 0 = no override)
-    { name: "screenVMoveSt", type: "uint16le", size: 2 },   // IF_VB_ST (uint16, 0xFFFF = no override)
-    { name: "screenVMoveSp", type: "uint16le", size: 2 },   // IF_VB_SP (uint16, 0xFFFF = no override)
-    { name: "screenHScale", type: "uint16le", size: 2 },    // VDS_HSCALE (uint16, 0 = no override)
-    { name: "screenVScale", type: "uint16le", size: 2 },    // VDS_VSCALE (uint16, 0 = no override)
+    // --- PRO: Developer menu per-slot tweaks - NTSC group (videoStandardInput in {1,3,5,6,7,8,9}) ---
+    { name: "devHTotal_ntsc", type: "uint16le", size: 2 },
+    { name: "devPllDiv_ntsc", type: "uint16le", size: 2 },
+    { name: "devSdramClock_ntsc", type: "byte", size: 1 },
+    { name: "devAdcFilter_ntsc", type: "byte", size: 1 },
+    { name: "devOsr_ntsc", type: "byte", size: 1 },
+    { name: "devSogLevel_ntsc", type: "byte", size: 1 },
+    { name: "devSyncInvert_ntsc", type: "byte", size: 1 },
+    // --- PRO: Screen Move/Scale per-slot tweaks - NTSC group ---
+    { name: "screenHMove_ntsc", type: "uint16le", size: 2 },
+    { name: "screenVMoveSt_ntsc", type: "uint16le", size: 2 },
+    { name: "screenVMoveSp_ntsc", type: "uint16le", size: 2 },
+    { name: "screenHScale_ntsc", type: "uint16le", size: 2 },
+    { name: "screenVScale_ntsc", type: "uint16le", size: 2 },
+    // --- PRO: Developer menu per-slot tweaks - PAL group (videoStandardInput in {2,4}) ---
+    { name: "devHTotal_pal", type: "uint16le", size: 2 },
+    { name: "devPllDiv_pal", type: "uint16le", size: 2 },
+    { name: "devSdramClock_pal", type: "byte", size: 1 },
+    { name: "devAdcFilter_pal", type: "byte", size: 1 },
+    { name: "devOsr_pal", type: "byte", size: 1 },
+    { name: "devSogLevel_pal", type: "byte", size: 1 },
+    { name: "devSyncInvert_pal", type: "byte", size: 1 },
+    // --- PRO: Screen Move/Scale per-slot tweaks - PAL group ---
+    { name: "screenHMove_pal", type: "uint16le", size: 2 },
+    { name: "screenVMoveSt_pal", type: "uint16le", size: 2 },
+    { name: "screenVMoveSp_pal", type: "uint16le", size: 2 },
+    { name: "screenHScale_pal", type: "uint16le", size: 2 },
+    { name: "screenVScale_pal", type: "uint16le", size: 2 },
     // --- PRO: Per-slot SyncWatcher override (added in v2.4.0) ---
     { name: "slotSyncwatcherMode", type: "byte", size: 1 }, // 0=inherit global, 1=force ON, 2=force OFF
     // --- Reserved for future expansion ---
-    { name: "reserved", type: "byte", size: 41 },
+    { name: "reserved", type: "byte", size: 22 },
   ],
 };
 
@@ -942,20 +956,32 @@ const updateSlotNames = () => {
   }
 };
 
+// slots.bin layout: [16 byte header "GBSPS\0" + version + reserved] + [36 SlotMeta]
+const SLOTS_HEADER_SIZE = 16;
+const SLOTS_HEADER_MAGIC = "GBSPS";
+const SLOTS_FORMAT_VERSION = 0x01;
+
 const fetchSlotNames = () => {
   return fetch(`/bin/slots.bin?${+new Date()}`)
     .then((response) => response.arrayBuffer())
     .then((arrayBuffer: ArrayBuffer) => {
-      if (
-        arrayBuffer.byteLength ===
-        StructParser.getSize(Structs, "slots") * GBSControl.maxSlots
-      ) {
-        GBSControl.structs = {
-          slots: StructParser.parseStructArray(arrayBuffer, Structs, "slots"),
-        };
-        return true;
+      const slotsTotalSize = StructParser.getSize(Structs, "slots") * GBSControl.maxSlots;
+      if (arrayBuffer.byteLength !== SLOTS_HEADER_SIZE + slotsTotalSize) {
+        return false;
       }
-      return false;
+      // Validate magic + version. If they don't match the firmware will have already
+      // wiped the file at boot, but we double-check here for sanity.
+      const headerBytes = new Uint8Array(arrayBuffer, 0, SLOTS_HEADER_SIZE);
+      const magic = String.fromCharCode(...Array.from(headerBytes.slice(0, SLOTS_HEADER_MAGIC.length)));
+      if (magic !== SLOTS_HEADER_MAGIC || headerBytes[6] !== SLOTS_FORMAT_VERSION) {
+        return false;
+      }
+      // Parse slots starting after the header.
+      const slotsBuffer = arrayBuffer.slice(SLOTS_HEADER_SIZE);
+      GBSControl.structs = {
+        slots: StructParser.parseStructArray(slotsBuffer, Structs, "slots"),
+      };
+      return true;
     });
 };
 
