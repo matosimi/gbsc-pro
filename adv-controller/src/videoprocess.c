@@ -172,8 +172,8 @@ uint8_t I2C_AUTO_COMMANDS[] = {
     /* Encoder configuration */
     0x56, 0x00, 0x9C,   // 0x1C ? // ADV7391 - Power up DACs and PLL [Encoder writes begin]
     0x56, 0x01, 0x70,   // ADV7391 - Mode select: ED (at 54MHz) input, Chrome rising, luma falling
-    0x56, 0x30, 0x18,   // 0x04 NTSC // ADV7391 - ED/HD Mode Register 1: ITU-BT.1362 625p at 50Hz, External HSYNC/VSYNC and field inputs, EIA-770.2 output EIA-770.3 output
-    0x56, 0x31, 0x01,   // ADV7391 - ED/HD Mode Register 2: Pixel data valid on
+    0x56, 0x30, 0x1C,   // 0x04 NTSC // ADV7391 - ED/HD Mode Register 1: ITU-BT.1362 625p at 50Hz, External HSYNC/VSYNC and field inputs, EIA-770.2 output EIA-770.3 output
+    0x56, 0x31, 0x11,   // ADV7391 - ED/HD Mode Register 2: Pixel data valid on, ED_HD_VBI_OPEN
     0x42, 0x0E, 0x00,   // ADV7280 - ADI Control 1: main register
 };
 
@@ -199,7 +199,7 @@ uint8_t I2C_COMMANDS_525p_CONFIG[] = {
 
 /* 625p (PAL) Encoder Configuration */
 uint8_t I2C_COMMANDS_625p_CONFIG[] = {
-    0x56, 0x30, 0x18,
+    0x56, 0x30, 0x1C,
     0x56, 0x31, 0x11,
 };
 
